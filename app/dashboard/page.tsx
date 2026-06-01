@@ -87,7 +87,7 @@ export default function DashboardPage() {
   if (!isAuthenticated) return null;
 
   const toggleOrder = (id: string) =>
-    setExpandedOrders((prev) => { const s = new Set(prev); s.has(id) ? s.delete(id) : s.add(id); return s; });
+    setExpandedOrders((prev) => { const s = new Set(prev); if (s.has(id)) { s.delete(id); } else { s.add(id); } return s; });
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
