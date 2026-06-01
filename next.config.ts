@@ -9,10 +9,6 @@ const nextConfig: NextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-  experimental: {
-    // @ts-expect-error nodeMiddleware is a valid experimental flag but missing from types
-    nodeMiddleware: true,
-  },
 };
 
 export default nextConfig;

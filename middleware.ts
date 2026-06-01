@@ -1,8 +1,11 @@
-import { convexAuthNextjsMiddleware } from "@convex-dev/auth/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-export const runtime = "nodejs";
-
-export default convexAuthNextjsMiddleware();
+// Convex auth is handled client-side via useConvexAuth.
+// This middleware is a no-op pass-through.
+export function middleware(_request: NextRequest) {
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
