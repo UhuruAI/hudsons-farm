@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: false,
   },
+  outputFileTracingRoot: process.cwd(),
   eslint: {
     ignoreDuringBuilds: true,
   },
