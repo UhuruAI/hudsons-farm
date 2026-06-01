@@ -1,5 +1,7 @@
 import { convexAuthNextjsMiddleware } from "@convex-dev/auth/nextjs/server";
 
+export const runtime = "nodejs";
+
 export default convexAuthNextjsMiddleware();
 
 export const config = {
