@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ConvexAuthNextjsServerProvider } from "@convex-dev/auth/nextjs/server";
 import ClientProviders from "@/components/ClientProviders";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
@@ -13,15 +14,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ClientProviders>
-          <Nav />
-          {children}
-          <Footer />
-          <ChatWidget />
-        </ClientProviders>
-      </body>
-    </html>
+    <ConvexAuthNextjsServerProvider>
+      <html lang="en" suppressHydrationWarning>
+        <body>
+          <ClientProviders>
+            <Nav />
+            {children}
+            <Footer />
+            <ChatWidget />
+          </ClientProviders>
+        </body>
+      </html>
+    </ConvexAuthNextjsServerProvider>
   );
 }
