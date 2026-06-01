@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Experiences — Hudson's Farm, Magaliesburg</title>
+  <meta name="description" content="Book a farm tour, mushroom harvest experience, fresh produce pickup, or overnight farm stay at Hudson's Farm in Magaliesburg. All experiences are hands-on and small-group.">
+  <script>
+    (function(){
+      var s=localStorage.getItem('theme');
+      var p=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',p);
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--earth);
+      margin-bottom: 0.375rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .exp-detail-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .exp-detail-card .card-photo {
+      height: 200px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .exp-detail-card .card-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .exp-detail-card:hover .card-photo img { transform: scale(1.04); }
+    .exp-detail-card .card-body {
+      padding: 1.375rem 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .exp-detail-card h3 { margin-bottom: 0.375rem; }
+    .exp-detail-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; flex: 1; margin-bottom: 1.25rem; }
+
+    .event-card {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+    }
+    .event-icon {
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: var(--r-sm);
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .event-card h3 { font-size: 1.0625rem; margin-bottom: 0.25rem; }
+    .event-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.5rem; }
+    .event-freq {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--earth);
+    }
+
+    /* Booking form contact info column */
+    .booking-info { display: flex; flex-direction: column; gap: 1.25rem; }
+    .booking-info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-sm);
+    }
+    .booking-info-item svg { color: var(--accent); flex-shrink: 0; margin-top: 0.1rem; }
+    .booking-info-item h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.125rem; }
+    .booking-info-item p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; margin: 0; }
+    .booking-info-item a { color: var(--accent); }
+    .booking-info-item a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <nav class="nav-inner">
+    <a href="/" class="logo">Hudson's <em>Farm</em></a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/the-farm">The Farm</a>
+      <a href="/experiences" aria-current="page">Experiences</a>
+      <a href="/services">Services</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="/admin/login" class="client-login">Client Login</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/the-farm">The Farm</a>
+    <a href="/experiences" aria-current="page">Experiences</a>
+    <a href="/services">Services</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/admin/login" class="client-login">Client Login</a>
+  </div>
+</header>
+
+<!-- ===================== PAGE HERO ===================== -->
+<div class="page-hero" style="position:relative;padding:0;overflow:hidden;min-height:460px;display:flex;align-items:center;border-bottom:none;">
+  <img src="/mpcfvd90-10-hero.png" alt="Hudson's Farm — organic fields in Magaliesburg at golden hour"
+       loading="eager"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;">
+  <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.18) 100%);z-index:1;"></div>
+  <div class="container" style="position:relative;z-index:2;padding-top:3.5rem;padding-bottom:3.5rem;">
+    <span class="eyebrow" style="color:rgba(255,255,255,0.75);">Agri-Tourism</span>
+    <h1 style="color:#fff;">Come to the Farm</h1>
+    <p style="color:rgba(255,255,255,0.82);max-width:540px;">Whether you're joining a guided tour, picking up a fresh harvest box, attending a mushroom workshop, or staying the night — Hudson's Farm is open to visitors. All experiences are hands-on, small-group, and run by Peter himself.</p>
+  </div>
+</div>
+
+<!-- ===================== EXPERIENCES GRID ===================== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Farm Experiences</span>
+    <h2>How to visit</h2>
+    <p class="section-sub">Book directly with Peter — no agencies, no packages, no middlemen. Just the farm, the work, and the produce.</p>
+
+    <div class="grid-3" style="margin-top:2.5rem;">
+
+      <div class="exp-detail-card">
+        <div class="card-photo">
+          <img src="/mpcfvd99-11-about.png" alt="Guided farm tour with Peter Hudson through the hemp fields" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="duration-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            1.5 hours
+          </div>
+          <span class="card-tag">Individual</span>
+          <h3>Guided Farm Tour</h3>
+          <p>Walk all three cultivation zones with Peter. See the hemp fields, mushroom tunnels, microgreens nursery, food garden, and the two natural dams. Includes a Q&amp;A at the end.</p>
+          <a href="#book" class="btn btn-primary" style="align-self:flex-start;">Book a tour</a>
+        </div>
+      </div>
+
+      <div class="exp-detail-card">
+        <div class="card-photo">
+          <img src="/mpcfvd90-10-hero.png" alt="Group farm tour at Hudson's Farm Magaliesburg" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="duration-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            2 hours
+          </div>
+          <span class="card-tag">Groups</span>
+          <h3>Group Farm Tour</h3>
+          <p>Ideal for schools, corporate teams, and families. An extended walk through the full property, covering regenerative farming principles, crop cycles, and the farm's closed-loop water and composting systems.</p>
+          <a href="#book" class="btn btn-primary" style="align-self:flex-start;">Book for groups</a>
+        </div>
+      </div>
+
+      <div class="exp-detail-card">
+        <div class="card-photo">
+          <img src="/mushroom-workshop.png" alt="Hands-on mushroom harvest workshop at Hudson's Farm" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="duration-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            1.5 hours
+          </div>
+          <span class="card-tag">Workshop</span>
+          <h3>Mushroom Harvest Experience</h3>
+          <p>Inside the growing tunnels, you'll learn how gourmet mushrooms are cultivated, when to harvest, and how to identify peak freshness. Leave with a freshly harvested selection to take home.</p>
+          <a href="#book" class="btn btn-primary" style="align-self:flex-start;">Book workshop</a>
+        </div>
+      </div>
+
+      <div class="exp-detail-card">
+        <div class="card-photo">
+          <img src="/mpcfvda5-15-microgreens.png" alt="Microgreens nursery tour at Hudson's Farm" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="duration-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            45 minutes
+          </div>
+          <span class="card-tag">Producer Tour</span>
+          <h3>Microgreens Nursery Walk</h3>
+          <p>A focused walk through the microgreens growing area — covering varieties, growing techniques, harvest schedules, and nutrition. Available as a standalone visit or as part of a full farm tour.</p>
+          <a href="#book" class="btn btn-primary" style="align-self:flex-start;">Book visit</a>
+        </div>
+      </div>
+
+      <div class="exp-detail-card">
+        <div class="card-photo">
+          <img src="/mpcfvda0-14-dam.png" alt="Fresh produce pickup at Hudson's Farm" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="duration-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            30 min
+          </div>
+          <span class="card-tag">Direct Purchase</span>
+          <h3>Fresh Harvest Pickup</h3>
+          <p>Arrange a direct pickup of seasonal vegetables, mushrooms, and microgreens — harvested that morning. The freshest produce available, straight from the soil to your hands.</p>
+          <a href="#book" class="btn btn-primary" style="align-self:flex-start;">Arrange pickup</a>
+        </div>
+      </div>
+
+      <div class="exp-detail-card">
+        <div class="card-photo">
+          <img src="/harvest-table.png" alt="Farm stay and agri-tourism overnight at Hudson's Farm" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="duration-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Overnight
+          </div>
+          <span class="card-tag">Farm Stay</span>
+          <h3>Agri-Tourism Farm Stay</h3>
+          <p>Wake up to the Magaliesberg valley, help with the morning harvest, and end the day with produce fresh from the garden. A genuine working farm escape — open land, two dams, and birdsong at dawn.</p>
+          <a href="#book" class="btn btn-primary" style="align-self:flex-start;">Enquire now</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== SEASONAL EVENTS ===================== -->
+<section class="section">
+  <div class="container">
+    <span class="eyebrow">Seasonal Events</span>
+    <h2>Events &amp; workshops</h2>
+    <p class="section-sub">Recurring farm events open to individuals, families, and small groups. Bookable online — contact Peter to reserve a spot.</p>
+
+    <div class="grid-2" style="margin-top:2rem;">
+
+      <div class="event-card">
+        <div class="event-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8C8 10 5.9 16.17 3.82 20.82c.17-.32.4-.65.62-.98"/><path d="M10.56 8.87A14.05 14.05 0 0 1 17 8"/></svg>
+        </div>
+        <div>
+          <h3>Mushroom Workshop</h3>
+          <p>Learn to identify, harvest, and store gourmet mushrooms. Participants leave with a grow-your-own kit and a selection of fresh mushrooms from the tunnel.</p>
+          <span class="event-freq">Monthly · Small groups</span>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div>
+          <h3>Fresh Harvest Box Days</h3>
+          <p>Collect a seasonal box of organic vegetables, mushrooms, and microgreens — harvested that morning. Available for weekly subscribers and one-off orders.</p>
+          <span class="event-freq">Weekly · Individual &amp; subscription</span>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        </div>
+        <div>
+          <h3>Microgreens Subscription Pickup</h3>
+          <p>Recurring weekly subscription for restaurants and health-conscious households. Visit the nursery, see what's growing that week, and take home a fresh selection.</p>
+          <span class="event-freq">Weekly · Subscription</span>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l19-9-9 19-2-8-8-2z"/></svg>
+        </div>
+        <div>
+          <h3>Farm Tour + Harvest Lunch</h3>
+          <p>A guided tour of the full property followed by a meal made from produce harvested that morning. Offered on request for groups of 4 or more.</p>
+          <span class="event-freq">On request · Groups of 4+</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ===================== BOOKING FORM ===================== -->
+<section class="section" id="book">
+  <div class="container">
+    <div class="split">
+      <div class="split-text" style="justify-content:flex-start;">
+        <div>
+          <span class="eyebrow">Make a Booking</span>
+          <h2>Book your experience</h2>
+          <p style="color:var(--muted);font-size:1.0625rem;line-height:1.65;margin-bottom:1.5rem;">Peter Hudson manages all bookings personally. Fill in this form and he'll be in touch within 24 hours to confirm your visit.</p>
+        </div>
+        <div class="booking-info">
+          <div class="booking-info-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+            <div>
+              <h4>Call Peter directly</h4>
+              <p><a href="tel:0731615319">073 161 5319</a></p>
+            </div>
+          </div>
+          <div class="booking-info-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <div>
+              <h4>Email</h4>
+              <p><a href="mailto:mzanziprince@gmail.com">mzanziprince@gmail.com</a></p>
+            </div>
+          </div>
+          <div class="booking-info-item">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            <div>
+              <h4>Hours</h4>
+              <p>Mon–Sat, 7:00am – 5:00pm</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form id="booking-form" style="display:flex;flex-direction:column;gap:1rem;">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="Your number">
+            </div>
+            <div class="form-group full">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="you@email.com" required>
+            </div>
+            <div class="form-group full">
+              <label for="booking_type">What would you like to book?</label>
+              <select id="booking_type" name="booking_type" required>
+                <option value="">Select an experience</option>
+                <option value="Farm Tour (Individual)">Farm Tour (Individual)</option>
+                <option value="Farm Tour (Group)">Farm Tour (Group)</option>
+                <option value="Mushroom Harvest Experience">Mushroom Harvest Experience</option>
+                <option value="Microgreens Nursery Walk">Microgreens Nursery Walk</option>
+                <option value="Fresh Produce Pickup">Fresh Produce Pickup</option>
+                <option value="Microgreens Subscription">Microgreens Subscription</option>
+                <option value="Agri-Tourism Farm Stay">Agri-Tourism Farm Stay</option>
+                <option value="Farm Tour + Harvest Lunch">Farm Tour + Harvest Lunch</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="message">Any details or questions</label>
+              <textarea id="message" name="message" rows="4" placeholder="Group size, preferred dates, dietary requirements..."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="align-self:flex-start;">Send Booking Request</button>
+          <p id="form-status" style="font-size:0.875rem;color:var(--muted);display:none;"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA BAND ===================== -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Not sure what to book?</h2>
+    <p>Call Peter directly on 073 161 5319. He'll suggest the right experience based on what you want to see and learn.</p>
+    <div class="cta-band-btns">
+      <a href="tel:0731615319" class="btn btn-primary">Call Peter</a>
+      <a href="/the-farm" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.4);color:#fff;">See the Farm Layout</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">Hudson's <em>Farm</em></a>
+      <p>Organic. Regenerative. Rooted in Africa.</p>
+      <address>
+        Magaliesburg, South Africa<br>
+        <a href="tel:0731615319">073 161 5319</a><br>
+        <a href="mailto:mzanziprince@gmail.com">mzanziprince@gmail.com</a>
+      </address>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/the-farm">The Farm</a></li>
+        <li><a href="/experiences">Experiences</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="/experiences">Book a Farm Tour</a></li>
+        <li><a href="/experiences">Fresh Harvest Pickup</a></li>
+        <li><a href="/experiences">Farm Stays</a></li>
+        <li><a href="/experiences">Microgreens Subscription</a></li>
+        <li><a href="/admin/login">Client Login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-legal" style="max-width:100%;">
+    <p>© 2025 Hudson's Farm. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  var toggle = document.getElementById('theme-toggle');
+  var html   = document.documentElement;
+  function syncIcon() {
+    var dark = html.getAttribute('data-theme') === 'dark';
+    toggle.querySelector('.icon-sun').style.display  = dark ? 'none'  : 'block';
+    toggle.querySelector('.icon-moon').style.display = dark ? 'block' : 'none';
+  }
+  syncIcon();
+  toggle.addEventListener('click', function() {
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    syncIcon();
+  });
+  var ham        = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  ham.addEventListener('click', function() {
+    var open = mobileMenu.classList.toggle('open');
+    ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+    ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      mobileMenu.classList.remove('open');
+      ham.setAttribute('aria-expanded', 'false');
+      ham.setAttribute('aria-label', 'Open menu');
+    });
+  });
+
+  // Booking form submission
+  document.getElementById('booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = this.querySelector('button[type=submit]');
+    var status = document.getElementById('form-status');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    var data = {
+      slug: 'farm-hudson',
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      booking_type: document.getElementById('booking_type').value,
+      message: document.getElementById('message').value
+    };
+    fetch('https://api.uhuruai.co.za/public/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      status.style.display = 'block';
+      status.style.color = 'var(--accent)';
+      status.textContent = 'Booking request sent. Peter will be in touch within 24 hours.';
+      btn.style.display = 'none';
+    })
+    .catch(function() {
+      btn.disabled = false;
+      btn.textContent = 'Send Booking Request';
+      status.style.display = 'block';
+      status.style.color = 'var(--earth)';
+      status.textContent = 'Something went wrong. Please call Peter on 073 161 5319.';
+    });
+  });
+</script>
+<script src="https://api.uhuruai.co.za/public/chat-widget.js?slug=farm-hudson" defer></script>
+</body>
+</html>

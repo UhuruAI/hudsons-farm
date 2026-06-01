@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Services &amp; Offerings — Hudson's Farm</title>
+  <meta name="description" content="Organic hemp, gourmet mushrooms, microgreens, farm tours, fresh harvest bookings, agri-tourism stays, and pecan orchards — all from Hudson's Farm, Magaliesburg.">
+  <script>
+    (function(){
+      var s=localStorage.getItem('theme');
+      var p=s||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+      document.documentElement.setAttribute('data-theme',p);
+    })();
+  </script>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    /* Service list layout */
+    .service-entry {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: clamp(2rem, 5vw, 3.5rem) 0;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    .service-entry:last-child { border-bottom: none; }
+    @media (min-width: 768px) {
+      .service-entry { grid-template-columns: 1fr 1fr; gap: 4rem; }
+      .service-entry.flip .svc-img  { order: 2; }
+      .service-entry.flip .svc-text { order: 1; }
+    }
+    .svc-img {
+      border-radius: var(--r-md);
+      overflow: hidden;
+      aspect-ratio: 3/2;
+    }
+    .svc-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .svc-text {}
+    .svc-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .svc-text h2 {
+      font-size: clamp(1.375rem, 3vw, 1.875rem);
+      margin-bottom: 1rem;
+    }
+    .svc-text p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 0.875rem;
+    }
+    .svc-text p:last-of-type { margin-bottom: 1.25rem; }
+    .svc-detail-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .svc-detail-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.625rem;
+      font-size: 0.9375rem;
+      color: var(--muted);
+    }
+    .svc-detail-list li::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-top: 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* No-image service card (for services without a dedicated photo) */
+    .svc-no-img {
+      background: var(--surface);
+      border-radius: var(--r-md);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .svc-no-img-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 3rem;
+    }
+    @media (min-width: 640px) {
+      .svc-no-img-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 960px) {
+      .svc-no-img-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .svc-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--r-sm);
+      background: rgba(45,90,39,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+    [data-theme="dark"] .svc-icon { background: rgba(79,168,69,0.15); }
+    .svc-icon svg { color: var(--accent); }
+    .svc-no-img h3 { margin-bottom: 0.5rem; font-size: 1.0625rem; }
+    .svc-no-img p { font-size: 0.875rem; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 1.25rem; }
+    .price-note {
+      display: inline-block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--earth);
+      padding: 0.25rem 0.625rem;
+      background: var(--surface-soft);
+      border-radius: var(--r-full);
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===================== HEADER ===================== -->
+<header>
+  <nav class="nav-inner">
+    <a href="/" class="logo">Hudson's <em>Farm</em></a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/the-farm">The Farm</a>
+      <a href="/experiences">Experiences</a>
+      <a href="/services" aria-current="page">Services</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="/admin/login" class="client-login">Client Login</a>
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="/">Home</a>
+    <a href="/services" aria-current="page">Services</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
+    <a href="/admin/login" class="client-login">Client Login</a>
+  </div>
+</header>
+
+<!-- ===================== PAGE HERO ===================== -->
+<div class="page-hero" style="position:relative;padding:0;overflow:hidden;min-height:460px;display:flex;align-items:center;border-bottom:none;">
+  <img src="/mpcfvd90-10-hero.png" alt="Hudson's Farm — organic fields in Magaliesburg at golden hour"
+       loading="eager"
+       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;">
+  <div style="position:absolute;inset:0;background:linear-gradient(to right,rgba(0,0,0,0.62) 0%,rgba(0,0,0,0.18) 100%);z-index:1;"></div>
+  <div class="container" style="position:relative;z-index:2;padding-top:3.5rem;padding-bottom:3.5rem;">
+    <span class="eyebrow" style="color:rgba(255,255,255,0.75);">Hudson's Farm</span>
+    <h1 style="color:#fff;">Our offerings</h1>
+    <p style="color:rgba(255,255,255,0.82);max-width:540px;">From hemp fields to mushroom houses to guided farm walks — everything we do starts with the soil and ends with your table.</p>
+  </div>
+</div>
+
+<!-- ===================== SERVICES — PHOTO ENTRIES ===================== -->
+<section class="section">
+  <div class="container">
+
+    <!-- 1. Organic Hemp Cultivation -->
+    <div class="service-entry">
+      <div class="svc-img">
+        <img src="/mpcfvd9p-13-hemp.png" alt="Rows of certified organic hemp plants growing at Hudson's Farm in Magaliesburg" loading="lazy">
+      </div>
+      <div class="svc-text">
+        <div class="svc-num">01 — Cultivation</div>
+        <h2>Organic Hemp Cultivation</h2>
+        <p>Hudson's Farm cultivates certified organic industrial hemp across dedicated plots on our 6.8-hectare property. Our hemp is grown without herbicides, pesticides, or synthetic fertilisers — relying on natural compost, companion planting, and our two on-site natural dams for irrigation.</p>
+        <p>We work with licensed cultivars suited to the Magaliesberg climate, producing fibre-grade and seed-grade hemp for direct sale and processing partnerships.</p>
+        <ul class="svc-detail-list">
+          <li>100% pesticide-free cultivation</li>
+          <li>Licensed and compliant with South African hemp regulations</li>
+          <li>Natural dam irrigation, minimal water footprint</li>
+          <li>Available for bulk enquiry and research partnerships</li>
+        </ul>
+        <span class="price-note">Enquire for pricing</span>
+        &nbsp;
+        <a href="/contact" class="btn btn-primary" style="margin-top:0.25rem;">Get in touch</a>
+      </div>
+    </div>
+
+    <!-- 2. Gourmet Mushroom Growing -->
+    <div class="service-entry flip">
+      <div class="svc-img">
+        <img src="/mpcfvd9g-12-services.png" alt="Gourmet mushrooms harvested at Hudson's Farm — oyster, shiitake, and seasonal varieties" loading="lazy">
+      </div>
+      <div class="svc-text">
+        <div class="svc-num">02 — Harvest</div>
+        <h2>Gourmet Mushroom Growing</h2>
+        <p>Our controlled mushroom growing environment produces oyster, shiitake, and seasonal specialty varieties harvested at peak freshness. Substrate is prepared from clean agricultural waste, completing a full farm-cycle loop.</p>
+        <p>We supply chefs, restaurants, farm-shop regulars, and home cooks who value knowing exactly where their food comes from. Harvest-to-door turnaround is typically same or next day.</p>
+        <ul class="svc-detail-list">
+          <li>Oyster, shiitake, and seasonal varieties</li>
+          <li>Chemical-free substrate from farm waste</li>
+          <li>Whole mushrooms and dried available</li>
+          <li>Batch bookings for restaurants and traders</li>
+        </ul>
+        <span class="price-note">Enquire for pricing</span>
+        &nbsp;
+        <a href="/contact" class="btn btn-primary" style="margin-top:0.25rem;">Book a harvest</a>
+      </div>
+    </div>
+
+    <!-- 3. Microgreens Production -->
+    <div class="service-entry">
+      <div class="svc-img">
+        <img src="/mpcfvda5-15-microgreens.png" alt="Dense trays of freshly grown microgreens in Hudson's Farm growing house" loading="lazy">
+      </div>
+      <div class="svc-text">
+        <div class="svc-num">03 — Microgreens</div>
+        <h2>Microgreens Production</h2>
+        <p>Our microgreens are grown in clean, controlled trays and harvested at 7–14 days for maximum nutrient density. We grow sunflower, radish, pea shoot, broccoli, and brassica blends — with seasonal rotations throughout the year.</p>
+        <p>Subscribe weekly and we'll pack your order fresh on harvest day. Minimum order is one standard tray; bulk and restaurant trays available.</p>
+        <ul class="svc-detail-list">
+          <li>Weekly subscription packs available</li>
+          <li>Sunflower, radish, pea, broccoli, and brassica blends</li>
+          <li>Grown without synthetic inputs</li>
+          <li>Pickup from the farm or local delivery (enquire)</li>
+        </ul>
+        <span class="price-note">Enquire for pricing</span>
+        &nbsp;
+        <a href="/contact" class="btn btn-primary" style="margin-top:0.25rem;">Subscribe</a>
+      </div>
+    </div>
+
+    <!-- 4. Organic Food Garden -->
+    <div class="service-entry flip">
+      <div class="svc-img">
+        <img src="/mpcfvda0-14-dam.png" alt="The organic food garden at Hudson's Farm, fed by the natural dam" loading="lazy">
+      </div>
+      <div class="svc-text">
+        <div class="svc-num">04 — Fresh Produce</div>
+        <h2>Organic Food Garden</h2>
+        <p>Our food garden runs on seasonal rotation — vegetables, herbs, leafy greens, and fruit grown in living soil enriched by our own compost and bokashi systems. No synthetic inputs, ever.</p>
+        <p>Fresh harvest boxes are available for collection from the farm on scheduled days. Boxes change with the season and are packed the morning of your pickup.</p>
+        <ul class="svc-detail-list">
+          <li>Seasonal vegetables, herbs, and fruit</li>
+          <li>Fresh harvest box pickups, scheduled in advance</li>
+          <li>Composted, living-soil beds</li>
+          <li>Great for families, home cooks, and health-conscious buyers</li>
+        </ul>
+        <span class="price-note">Enquire for pricing</span>
+        &nbsp;
+        <a href="/contact" class="btn btn-primary" style="margin-top:0.25rem;">Book pickup</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== ADDITIONAL SERVICES CARDS ===================== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <span class="eyebrow">More from Hudson's Farm</span>
+    <h2>Experiences &amp; agri-tourism</h2>
+    <p class="section-sub">Beyond what we grow, the farm itself is a destination. Book a tour, plan a stay, or arrange your own fresh-harvest visit.</p>
+
+    <div class="svc-no-img-grid">
+
+      <div class="svc-no-img">
+        <div>
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h3>Farm Tours &amp; Experiences</h3>
+          <p>Guided walks through the hemp fields, mushroom growing house, microgreens room, and food garden. Learn the regenerative methods behind each crop and ask Peter anything.</p>
+        </div>
+        <div>
+          <span class="price-note">Enquire for pricing</span>
+          <div style="margin-top:1rem;"><a href="/contact" class="btn btn-secondary" style="font-size:0.875rem;min-height:40px;padding:0.5rem 1.125rem;">Book a tour</a></div>
+        </div>
+      </div>
+
+      <div class="svc-no-img">
+        <div>
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <h3>Fresh Harvest Bookings</h3>
+          <p>Schedule your own fresh-harvest visit. Arrive on harvest day to pick your produce directly from the field — herbs, vegetables, microgreens, mushrooms, and more.</p>
+        </div>
+        <div>
+          <span class="price-note">Enquire for pricing</span>
+          <div style="margin-top:1rem;"><a href="/contact" class="btn btn-secondary" style="font-size:0.875rem;min-height:40px;padding:0.5rem 1.125rem;">Book pickup</a></div>
+        </div>
+      </div>
+
+      <div class="svc-no-img">
+        <div>
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>Agri-Tourism &amp; Farm Stays</h3>
+          <p>Stay on the farm and wake up to the Magaliesberg valley. Enjoy the dams, help with morning rounds, and leave with a produce box from that day's harvest. Authentic farm-living, off the beaten track.</p>
+        </div>
+        <div>
+          <span class="price-note">Enquire for pricing</span>
+          <div style="margin-top:1rem;"><a href="/contact" class="btn btn-secondary" style="font-size:0.875rem;min-height:40px;padding:0.5rem 1.125rem;">Enquire stay</a></div>
+        </div>
+      </div>
+
+      <div class="svc-no-img">
+        <div>
+          <div class="svc-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5 0 9-4 9-9S17 4 12 4 3 8 3 13s4 9 9 9z"/><path d="M12 8v5l3 3"/></svg>
+          </div>
+          <h3>Pecan Tree Orchard</h3>
+          <p>Our mature pecan orchard lines the eastern edge of the property, producing seasonal nuts harvested in autumn. Pecan nuts are available in season — enquire for availability, bulk orders, and orchard visit options.</p>
+        </div>
+        <div>
+          <span class="price-note">Seasonal availability</span>
+          <div style="margin-top:1rem;"><a href="/contact" class="btn btn-secondary" style="font-size:0.875rem;min-height:40px;padding:0.5rem 1.125rem;">Enquire</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CTA BAND ===================== -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Book your farm experience</h2>
+    <p>Tours, harvest pickups, stays, and produce — all arranged through a single short booking form.</p>
+    <div class="cta-band-btns">
+      <a href="/contact" class="btn btn-primary">Book Now</a>
+      <a href="/about" class="btn btn-secondary" style="border-color:rgba(255,255,255,0.4);color:#fff;">About the farm</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="/" class="logo">Hudson's <em>Farm</em></a>
+      <p>Organic. Regenerative. Rooted in Africa.</p>
+      <address>
+        Magaliesburg, South Africa<br>
+        <a href="tel:0731615319">073 161 5319</a><br>
+        <a href="mailto:mzanziprince@gmail.com">mzanziprince@gmail.com</a>
+      </address>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Visit</h4>
+      <ul>
+        <li><a href="/contact">Book a Farm Tour</a></li>
+        <li><a href="/contact">Fresh Harvest Pickup</a></li>
+        <li><a href="/contact">Farm Stays</a></li>
+        <li><a href="/contact">Microgreens Subscription</a></li>
+        <li><a href="/admin/login">Client Login</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-legal" style="max-width:100%;">
+    <p>© 2025 Hudson's Farm. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  var toggle = document.getElementById('theme-toggle');
+  var html   = document.documentElement;
+  function syncIcon() {
+    var dark = html.getAttribute('data-theme') === 'dark';
+    toggle.querySelector('.icon-sun').style.display  = dark ? 'none'  : 'block';
+    toggle.querySelector('.icon-moon').style.display = dark ? 'block' : 'none';
+  }
+  syncIcon();
+  toggle.addEventListener('click', function() {
+    var next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    syncIcon();
+  });
+  var ham        = document.getElementById('hamburger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  ham.addEventListener('click', function() {
+    var open = mobileMenu.classList.toggle('open');
+    ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+    ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      mobileMenu.classList.remove('open');
+      ham.setAttribute('aria-expanded', 'false');
+      ham.setAttribute('aria-label', 'Open menu');
+    });
+  });
+</script>
+<script src="https://api.uhuruai.co.za/public/chat-widget.js?slug=farm-hudson" defer></script>
+</body>
+</html>
