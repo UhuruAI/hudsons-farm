@@ -223,7 +223,6 @@ export default function AdminPage() {
             <input type="file" accept="image/*" onChange={handleFile} style={{ display: "none" }} ref={fileInputRef} />
             {form.uploadPreview ? (
               <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={form.uploadPreview} alt="" style={{ width: 72, height: 72, objectFit: "cover", borderRadius: "var(--r-sm)", border: "1px solid var(--border)" }} />
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <button type="button" onClick={() => fileInputRef.current?.click()} className="action-btn">Change</button>
@@ -439,7 +438,6 @@ export default function AdminPage() {
                         ) : (
                           <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "0.875rem 1.125rem", display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
                             {p.imageUrl ? (
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img src={p.imageUrl} alt={p.name} style={{ width: 52, height: 52, objectFit: "cover", borderRadius: "var(--r-sm)", border: "1px solid var(--border)", flexShrink: 0 }} />
                             ) : (
                               <div style={{ width: 52, height: 52, borderRadius: "var(--r-sm)", border: "1px dashed var(--border)", background: "var(--bg)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--muted)", fontSize: "0.75rem" }}>No img</div>
