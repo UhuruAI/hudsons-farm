@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useAuthActions } from "@convex-dev/auth/react";
 import { useConvexAuth, useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import type { Id } from "@/convex/_generated/dataModel";
@@ -323,6 +324,7 @@ function ProductFormFields({ form, setForm, fileInputRef, pendingFile, reference
 
 export default function AdminPage() {
   const router = useRouter();
+  const { signOut } = useAuthActions();
   const { isAuthenticated, isLoading } = useConvexAuth();
   const isAdmin = useQuery(api.users.isAdmin);
 
@@ -365,6 +367,11 @@ export default function AdminPage() {
   const seedProducts = useMutation(api.products.seed);
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const updateSettings = useMutation(api.settings.update);
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
+  };
 
   useEffect(() => {
     if (!isLoading && isAdmin !== undefined) {
@@ -505,7 +512,12 @@ export default function AdminPage() {
             <span className="eyebrow">Admin</span>
             <h1>Admin Panel</h1>
           </div>
-          <Link href="/dashboard" className="btn btn-secondary" style={{ minHeight: "auto", padding: "0.5rem 1rem", fontSize: "0.875rem" }}>My account</Link>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
+            <Link href="/dashboard" className="btn btn-secondary" style={{ minHeight: "auto", padding: "0.5rem 1rem", fontSize: "0.875rem" }}>My account</Link>
+            <button onClick={handleSignOut} className="btn btn-secondary" style={{ minHeight: "auto", padding: "0.5rem 1rem", fontSize: "0.875rem" }}>
+              Sign out
+            </button>
+          </div>
         </div>
       </div>
 

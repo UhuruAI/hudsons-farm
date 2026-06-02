@@ -133,14 +133,19 @@ export default function DashboardPage() {
   return (
     <main>
       <div className="page-hero">
-        <div className="container">
-          <span className="eyebrow">My Account</span>
-          <h1>Welcome, {displayName.split("@")[0] || "back"}</h1>
-          {isAdmin && (
-            <p style={{ marginTop: "0.5rem" }}>
-              <Link href="/admin" style={{ color: "var(--accent)", fontWeight: 600, fontSize: "0.9375rem" }}>Go to Admin Panel →</Link>
-            </p>
-          )}
+        <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem" }}>
+          <div>
+            <span className="eyebrow">My Account</span>
+            <h1>Welcome, {displayName.split("@")[0] || "back"}</h1>
+            {isAdmin && (
+              <p style={{ marginTop: "0.5rem" }}>
+                <Link href="/admin" style={{ color: "var(--accent)", fontWeight: 600, fontSize: "0.9375rem" }}>Go to Admin Panel →</Link>
+              </p>
+            )}
+          </div>
+          <button onClick={handleSignOut} className="btn btn-secondary" style={{ minHeight: "auto", padding: "0.5rem 1.25rem" }}>
+            Sign out
+          </button>
         </div>
       </div>
 

@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { ensureAdminProfile, isAdminEmail, userIsAdmin } from "./admin";
 
 export const getProfile = query({
   args: {},
@@ -49,11 +50,7 @@ export const isAdmin = query({
   handler: async (ctx) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) return false;
-    const profile = await ctx.db
-      .query("userProfiles")
-      .withIndex("by_userId", (q) => q.eq("userId", userId))
-      .first();
-    return profile?.isAdmin === true;
+    return userIsAdmin(ctx, userId);
   },
 });
 
@@ -71,11 +68,7 @@ export const listClients = query({
   handler: async (ctx) => {
     const requesterId = await getAuthUserId(ctx);
     if (!requesterId) return [];
-    const requesterProfile = await ctx.db
-      .query("userProfiles")
-      .withIndex("by_userId", (q) => q.eq("userId", requesterId))
-      .first();
-    if (!requesterProfile?.isAdmin) return [];
+    if (!(await userIsAdmin(ctx, requesterId))) return [];
 
     const users = await ctx.db.query("users").collect();
 
@@ -103,9 +96,19 @@ export const listClients = query({
           joinDate: user._creationTime,
           orderCount,
           totalSpent,
-          isAdmin: profile?.isAdmin ?? false,
+          isAdmin: profile?.isAdmin === true || isAdminEmail((user as { email?: string }).email),
         };
       })
     );
+  },
+});
+
+export const syncAdminProfile = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) throw new Error("Not authenticated");
+    const user = await ctx.db.get(userId);
+    await ensureAdminProfile(ctx, userId, user?.email);
   },
 });

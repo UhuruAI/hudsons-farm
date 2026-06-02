@@ -1,17 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
-
-async function requireAdmin(ctx: Parameters<typeof getAuthUserId>[0] & { db: { query: (table: string) => { withIndex: (name: string, fn: (q: { eq: (field: string, val: unknown) => unknown }) => unknown) => { first: () => Promise<{ isAdmin?: boolean } | null> } } } }) {
-  const userId = await getAuthUserId(ctx);
-  if (!userId) throw new Error("Not authenticated");
-  const profile = await ctx.db
-    .query("userProfiles")
-    .withIndex("by_userId", (q) => q.eq("userId", userId))
-    .first();
-  if (!profile?.isAdmin) throw new Error("Not authorized");
-  return userId;
-}
+import { requireAdmin } from "./admin";
 
 async function resolveImageUrl(ctx: { storage: { getUrl: (id: string) => Promise<string | null> } }, p: { storageId?: string; image?: string }) {
   if (p.storageId) return await ctx.storage.getUrl(p.storageId);
@@ -71,7 +61,7 @@ export const create = mutation({
     featured: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
-    await requireAdmin(ctx as Parameters<typeof requireAdmin>[0]);
+    await requireAdmin(ctx, await getAuthUserId(ctx));
     return ctx.db.insert("products", args);
   },
 });
@@ -89,7 +79,7 @@ export const update = mutation({
     featured: v.optional(v.boolean()),
   },
   handler: async (ctx, { id, ...fields }) => {
-    await requireAdmin(ctx as Parameters<typeof requireAdmin>[0]);
+    await requireAdmin(ctx, await getAuthUserId(ctx));
     await ctx.db.patch(id, fields);
   },
 });
@@ -97,7 +87,7 @@ export const update = mutation({
 export const remove = mutation({
   args: { id: v.id("products") },
   handler: async (ctx, { id }) => {
-    await requireAdmin(ctx as Parameters<typeof requireAdmin>[0]);
+    await requireAdmin(ctx, await getAuthUserId(ctx));
     const product = await ctx.db.get(id);
     if (product?.storageId) {
       await ctx.storage.delete(product.storageId);

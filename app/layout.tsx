@@ -5,6 +5,7 @@ import ClientProviders from "@/components/ClientProviders";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Hudson's Farm | Organic & Regenerative",
@@ -18,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <html lang="en" suppressHydrationWarning>
         <body>
           <ClientProviders>
+            <ScrollToTop />
             <Nav />
             {children}
             <Footer />

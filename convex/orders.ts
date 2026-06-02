@@ -1,6 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
+import { requireAdmin, userIsAdmin } from "./admin";
 
 const orderItemValidator = v.object({
   id: v.string(),
@@ -83,11 +84,7 @@ export const listAll = query({
   handler: async (ctx, { status, userId: filterUserId }) => {
     const requesterId = await getAuthUserId(ctx);
     if (!requesterId) return [];
-    const profile = await ctx.db
-      .query("userProfiles")
-      .withIndex("by_userId", (q) => q.eq("userId", requesterId))
-      .first();
-    if (!profile?.isAdmin) return [];
+    if (!(await userIsAdmin(ctx, requesterId))) return [];
 
     if (filterUserId) {
       return ctx.db
@@ -126,12 +123,7 @@ export const updateStatus = mutation({
   },
   handler: async (ctx, { id, status }) => {
     const userId = await getAuthUserId(ctx);
-    if (!userId) throw new Error("Not authenticated");
-    const profile = await ctx.db
-      .query("userProfiles")
-      .withIndex("by_userId", (q) => q.eq("userId", userId))
-      .first();
-    if (!profile?.isAdmin) throw new Error("Not authorized");
+    await requireAdmin(ctx, userId);
     await ctx.db.patch(id, { status });
   },
 });
