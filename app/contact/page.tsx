@@ -127,7 +127,7 @@ export default function ContactPage() {
                 {[
                   { n: "1", title: "Peter confirms your booking", desc: "Usually within one business day by phone or email. He&apos;ll confirm the date and any special requirements." },
                   { n: "2", title: "You receive directions", desc: "Exact farm directions and parking instructions are shared on confirmation. Magaliesburg is 90 minutes from Johannesburg." },
-                  { n: "3", title: "Arrive &amp; enjoy", desc: "Walk the farm, pick your produce, or settle in for your stay. Come hungry. The valley is beautiful." },
+                  { n: "3", title: "Arrive and enjoy", desc: "Walk the farm, pick your produce, or settle in for your stay. Come hungry. The valley is beautiful." },
                 ].map(({ n, title, desc }) => (
                   <div key={n} style={{ display: "flex", gap: "0.875rem", marginBottom: "1rem" }}>
                     <div style={{ width: 28, height: 28, borderRadius: "50%", background: "var(--accent)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "0.8125rem", flexShrink: 0 }}>{n}</div>
