@@ -31,17 +31,295 @@ type ProductForm = {
   imageUrl: string;
   storageId: string | null;
   uploadPreview: string | null;
+  referencePreview: string | null;
+  generatedImagePreview: string | null;
+  imagePrompt: string;
+  customImagePrompt: string;
 };
 
 const emptyProduct: ProductForm = {
   name: "", category: "Baked Goods", price: "",
   description: "", inStock: true, featured: false,
   imageMode: "upload", imageUrl: "", storageId: null, uploadPreview: null,
+  referencePreview: null, generatedImagePreview: null,
+  imagePrompt: "farm-studio", customImagePrompt: "",
 };
 
 const TAB_ICONS: Record<AdminTab, string> = {
   overview: "◈", products: "▣", orders: "◉", clients: "◎", settings: "⚙",
 };
+
+const IMAGE_PROMPTS = [
+  {
+    id: "farm-studio",
+    label: "Farm studio product",
+    prompt:
+      "Create a studio-quality square ecommerce product photo of {name}. Keep the actual product faithful to the reference image. Place it on a warm neutral stone surface with soft natural window light, subtle Hudson's Farm organic farm styling, clean background, realistic shadows, premium but honest artisanal look, no text or logos added.",
+  },
+  {
+    id: "baked-goods",
+    label: "Baked goods table",
+    prompt:
+      "Create a square professional food product image of {name}. Preserve the product from the reference photo. Stage it on a rustic farm kitchen table with a linen cloth, a few natural crumbs or ingredients, soft morning light, shallow depth of field, appetizing texture, no text or packaging changes.",
+  },
+  {
+    id: "jar-pantry",
+    label: "Jar or pantry item",
+    prompt:
+      "Create a square premium ecommerce photo of {name}. Keep the jar, bottle, or pack faithful to the reference. Stage it upright on a clean natural surface with small relevant ingredients around it, warm daylight, crisp focus, realistic reflections, organic farm pantry aesthetic, no new label text.",
+  },
+  {
+    id: "spice-flatlay",
+    label: "Spice flat lay",
+    prompt:
+      "Create a square overhead product flat lay for {name}. Preserve the product appearance from the reference. Use a clean dark slate or natural wood surface, tasteful scattered spices or herbs, balanced composition, studio lighting, sharp detail, no added text.",
+  },
+  {
+    id: "minimal-white",
+    label: "Clean white ecommerce",
+    prompt:
+      "Create a square clean ecommerce product photo of {name}. Keep the product accurate to the reference image. Use an off-white seamless background, soft shadow, centered composition, bright natural lighting, premium catalogue quality, no props and no added text.",
+  },
+  {
+    id: "custom",
+    label: "Custom prompt",
+    prompt: "",
+  },
+] as const;
+
+function resolveImagePrompt(form: ProductForm) {
+  const selected = IMAGE_PROMPTS.find((prompt) => prompt.id === form.imagePrompt) ?? IMAGE_PROMPTS[0];
+  const template = selected.id === "custom" ? form.customImagePrompt : selected.prompt;
+  return template
+    .replaceAll("{name}", form.name.trim() || "this Hudson's Farm product")
+    .replaceAll("{category}", form.category)
+    .replaceAll("{description}", form.description.trim() || "an artisanal farm product");
+}
+
+function readFileAsBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const value = String(reader.result ?? "");
+      resolve(value.includes(",") ? value.split(",")[1] : value);
+    };
+    reader.onerror = () => reject(reader.error ?? new Error("Could not read image"));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function dataUrlToFile(dataUrl: string, fileName: string): Promise<File> {
+  const response = await fetch(dataUrl);
+  const blob = await response.blob();
+  return new File([blob], fileName, { type: blob.type || "image/png" });
+}
+
+function ImageUploadSection({
+  form, setForm, fileInputRef, pendingFile, referenceFile,
+}: {
+  form: ProductForm;
+  setForm: (f: ProductForm) => void;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  pendingFile: React.RefObject<File | null>;
+  referenceFile: React.RefObject<File | null>;
+}) {
+  const [generating, setGenerating] = useState(false);
+  const [imageError, setImageError] = useState<string | null>(null);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const preview = URL.createObjectURL(file);
+    pendingFile.current = file;
+    referenceFile.current = file;
+    setImageError(null);
+    setForm({
+      ...form,
+      imageMode: "upload",
+      uploadPreview: preview,
+      referencePreview: preview,
+      generatedImagePreview: null,
+      storageId: null,
+    });
+  };
+
+  const openFilePicker = () => {
+    setForm({ ...form, imageMode: "upload" });
+    window.setTimeout(() => fileInputRef.current?.click(), 0);
+  };
+
+  const removeImage = () => {
+    pendingFile.current = null;
+    referenceFile.current = null;
+    if (fileInputRef.current) fileInputRef.current.value = "";
+    setImageError(null);
+    setForm({
+      ...form,
+      uploadPreview: null,
+      referencePreview: null,
+      generatedImagePreview: null,
+      storageId: null,
+    });
+  };
+
+  const deleteGeneratedImage = () => {
+    pendingFile.current = referenceFile.current;
+    setImageError(null);
+    setForm({
+      ...form,
+      uploadPreview: form.referencePreview,
+      generatedImagePreview: null,
+      storageId: null,
+    });
+  };
+
+  const generateImage = async () => {
+    if (!referenceFile.current) {
+      setImageError("Upload a reference product photo first.");
+      return;
+    }
+    const prompt = resolveImagePrompt(form).trim();
+    if (!prompt) {
+      setImageError("Choose a prompt or write a custom prompt.");
+      return;
+    }
+
+    setGenerating(true);
+    setImageError(null);
+    try {
+      const imageData = await readFileAsBase64(referenceFile.current);
+      const response = await fetch("/api/admin/generate-product-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          prompt,
+          imageData,
+          mimeType: referenceFile.current.type || "image/png",
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.imageDataUrl) {
+        throw new Error(result.error ?? "Image generation failed");
+      }
+
+      const generatedFile = await dataUrlToFile(result.imageDataUrl, "generated-product-image.png");
+      pendingFile.current = generatedFile;
+      setForm({
+        ...form,
+        imageMode: "upload",
+        uploadPreview: result.imageDataUrl,
+        generatedImagePreview: result.imageDataUrl,
+        storageId: null,
+      });
+    } catch (error) {
+      setImageError(error instanceof Error ? error.message : "Image generation failed");
+    } finally {
+      setGenerating(false);
+    }
+  };
+
+  return (
+    <div className="form-group full">
+      <label>Product image</label>
+      <div className="product-image-toolbar">
+        <button type="button" onClick={openFilePicker}
+          className={`action-btn${form.imageMode === "upload" ? " primary" : ""}`}>Upload file</button>
+        <button type="button" onClick={() => setForm({ ...form, imageMode: "url" })}
+          className={`action-btn${form.imageMode === "url" ? " primary" : ""}`}>Image URL</button>
+      </div>
+      {form.imageMode === "upload" ? (
+        <div className="product-image-panel">
+          <input type="file" accept="image/*" onChange={handleFile} style={{ display: "none" }} ref={fileInputRef} />
+          {form.uploadPreview ? (
+            <div className="product-image-preview-row">
+              <img src={form.uploadPreview} alt="" className="product-image-preview" />
+              <div className="product-image-actions">
+                <button type="button" onClick={openFilePicker} className="action-btn">Change</button>
+                {form.generatedImagePreview && (
+                  <button type="button" onClick={deleteGeneratedImage} className="action-btn">Delete generated</button>
+                )}
+                <button type="button" onClick={removeImage} className="action-btn danger">Remove</button>
+              </div>
+            </div>
+          ) : (
+            <p className="product-image-empty">Upload a product photo to use as the product image or as a Gemini reference.</p>
+          )}
+
+          <div className="product-image-generator">
+            <div className="form-group">
+              <label>Gemini image prompt</label>
+              <select value={form.imagePrompt} onChange={(e) => setForm({ ...form, imagePrompt: e.target.value })}>
+                {IMAGE_PROMPTS.map((prompt) => <option key={prompt.id} value={prompt.id}>{prompt.label}</option>)}
+              </select>
+            </div>
+            {form.imagePrompt === "custom" && (
+              <div className="form-group">
+                <label>Custom prompt</label>
+                <textarea value={form.customImagePrompt}
+                  onChange={(e) => setForm({ ...form, customImagePrompt: e.target.value })}
+                  rows={3}
+                  placeholder="Describe the staged product image you want Gemini to create." />
+              </div>
+            )}
+            <div className="product-image-generate-row">
+              <button type="button" onClick={generateImage} className="action-btn primary" disabled={generating || !referenceFile.current}>
+                {generating ? "Generating..." : form.generatedImagePreview ? "Regenerate image" : "Generate image"}
+              </button>
+              {form.generatedImagePreview && (
+                <span className="product-image-status">Generated image will be saved with this product.</span>
+              )}
+            </div>
+            {imageError && <p className="product-image-error">{imageError}</p>}
+          </div>
+        </div>
+      ) : (
+        <input type="text" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} placeholder="/images/product.png or https://..." />
+      )}
+    </div>
+  );
+}
+
+function ProductFormFields({ form, setForm, fileInputRef, pendingFile, referenceFile }: {
+  form: ProductForm;
+  setForm: (f: ProductForm) => void;
+  fileInputRef: React.RefObject<HTMLInputElement | null>;
+  pendingFile: React.RefObject<File | null>;
+  referenceFile: React.RefObject<File | null>;
+}) {
+  return (
+    <div className="form-grid">
+      <div className="form-group">
+        <label>Name *</label>
+        <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
+      </div>
+      <div className="form-group">
+        <label>Category *</label>
+        <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
+          {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
+        </select>
+      </div>
+      <div className="form-group">
+        <label>Price (R) *</label>
+        <input type="number" required min="0" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="e.g. 89" />
+      </div>
+      <div className="product-checks">
+        <label>
+          <input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} />
+          In stock
+        </label>
+        <label>
+          <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} />
+          Featured
+        </label>
+      </div>
+      <div className="form-group full">
+        <label>Description *</label>
+        <textarea required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} />
+      </div>
+      <ImageUploadSection form={form} setForm={setForm} fileInputRef={fileInputRef} pendingFile={pendingFile} referenceFile={referenceFile} />
+    </div>
+  );
+}
 
 export default function AdminPage() {
   const router = useRouter();
@@ -63,6 +341,8 @@ export default function AdminPage() {
 
   const pendingFileNew = useRef<File | null>(null);
   const pendingFileEdit = useRef<File | null>(null);
+  const referenceFileNew = useRef<File | null>(null);
+  const referenceFileEdit = useRef<File | null>(null);
   const fileInputNewRef = useRef<HTMLInputElement>(null);
   const fileInputEditRef = useRef<HTMLInputElement>(null);
 
@@ -135,6 +415,7 @@ export default function AdminPage() {
       });
       setNewForm(emptyProduct);
       pendingFileNew.current = null;
+      referenceFileNew.current = null;
       setShowNewForm(false);
     } finally { setSaving(false); }
   };
@@ -148,7 +429,13 @@ export default function AdminPage() {
       imageUrl: p.image ?? "",
       storageId: p.storageId ?? null,
       uploadPreview: p.imageUrl ?? null,
+      referencePreview: null,
+      generatedImagePreview: null,
+      imagePrompt: "farm-studio",
+      customImagePrompt: "",
     });
+    pendingFileEdit.current = null;
+    referenceFileEdit.current = null;
   };
 
   const handleUpdate = async (e: React.FormEvent) => {
@@ -170,6 +457,7 @@ export default function AdminPage() {
       });
       setEditingId(null);
       pendingFileEdit.current = null;
+      referenceFileEdit.current = null;
     } finally { setSaving(false); }
   };
 
@@ -194,92 +482,6 @@ export default function AdminPage() {
       setTimeout(() => setSettingsSaved(false), 2500);
     } finally { setSettingsSaving(false); }
   };
-
-  function ImageUploadSection({
-    form, setForm, fileInputRef, pendingFile,
-  }: {
-    form: ProductForm;
-    setForm: (f: ProductForm) => void;
-    fileInputRef: React.RefObject<HTMLInputElement | null>;
-    pendingFile: React.RefObject<File | null>;
-  }) {
-    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      pendingFile.current = file;
-      setForm({ ...form, uploadPreview: URL.createObjectURL(file), storageId: null });
-    };
-    return (
-      <div className="form-group full">
-        <label>Product image</label>
-        <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.625rem" }}>
-          <button type="button" onClick={() => setForm({ ...form, imageMode: "upload" })}
-            className={`action-btn${form.imageMode === "upload" ? " primary" : ""}`}>Upload file</button>
-          <button type="button" onClick={() => setForm({ ...form, imageMode: "url" })}
-            className={`action-btn${form.imageMode === "url" ? " primary" : ""}`}>Image URL</button>
-        </div>
-        {form.imageMode === "upload" ? (
-          <div>
-            <input type="file" accept="image/*" onChange={handleFile} style={{ display: "none" }} ref={fileInputRef} />
-            {form.uploadPreview ? (
-              <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                <img src={form.uploadPreview} alt="" style={{ width: 72, height: 72, objectFit: "cover", borderRadius: "var(--r-sm)", border: "1px solid var(--border)" }} />
-                <div style={{ display: "flex", gap: "0.5rem" }}>
-                  <button type="button" onClick={() => fileInputRef.current?.click()} className="action-btn">Change</button>
-                  <button type="button" onClick={() => { setForm({ ...form, uploadPreview: null, storageId: null }); pendingFile.current = null; }} className="action-btn danger">Remove</button>
-                </div>
-              </div>
-            ) : (
-              <button type="button" onClick={() => fileInputRef.current?.click()} className="action-btn">Choose image…</button>
-            )}
-          </div>
-        ) : (
-          <input type="text" value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} placeholder="/images/product.png or https://…" />
-        )}
-      </div>
-    );
-  }
-
-  function ProductFormFields({ form, setForm, fileInputRef, pendingFile }: {
-    form: ProductForm;
-    setForm: (f: ProductForm) => void;
-    fileInputRef: React.RefObject<HTMLInputElement | null>;
-    pendingFile: React.RefObject<File | null>;
-  }) {
-    return (
-      <div className="form-grid">
-        <div className="form-group">
-          <label>Name *</label>
-          <input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
-        </div>
-        <div className="form-group">
-          <label>Category *</label>
-          <select value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })}>
-            {CATEGORIES.map((c) => <option key={c}>{c}</option>)}
-          </select>
-        </div>
-        <div className="form-group">
-          <label>Price (R) *</label>
-          <input type="number" required min="0" step="0.01" value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} placeholder="e.g. 89" />
-        </div>
-        <div className="form-group" style={{ display: "flex", gap: "1.5rem", alignItems: "center", paddingTop: "1.5rem" }}>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0, fontWeight: 500 }}>
-            <input type="checkbox" checked={form.inStock} onChange={(e) => setForm({ ...form, inStock: e.target.checked })} style={{ width: "auto" }} />
-            In stock
-          </label>
-          <label style={{ display: "flex", alignItems: "center", gap: "0.5rem", cursor: "pointer", marginBottom: 0, fontWeight: 500 }}>
-            <input type="checkbox" checked={form.featured} onChange={(e) => setForm({ ...form, featured: e.target.checked })} style={{ width: "auto" }} />
-            Featured
-          </label>
-        </div>
-        <div className="form-group full">
-          <label>Description *</label>
-          <textarea required value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} />
-        </div>
-        <ImageUploadSection form={form} setForm={setForm} fileInputRef={fileInputRef} pendingFile={pendingFile} />
-      </div>
-    );
-  }
 
   // ── Stat calculations ──────────────────────────────────────────────────────
   const totalRevenue = allOrders?.filter((o) => o.status !== "cancelled" && o.status !== "pending").reduce((s, o) => s + o.total, 0) ?? 0;
@@ -397,7 +599,7 @@ export default function AdminPage() {
                     <h2 style={{ fontSize: "1.25rem" }}>Products ({products?.length ?? 0})</h2>
                     <div style={{ display: "flex", gap: "0.75rem" }}>
                       <button onClick={() => seedProducts()} className="action-btn">Seed 15 products</button>
-                      <button onClick={() => { setShowNewForm((v) => !v); setEditingId(null); }}
+                      <button onClick={() => { setShowNewForm((v) => !v); setEditingId(null); pendingFileNew.current = null; referenceFileNew.current = null; }}
                         className={`action-btn${showNewForm ? "" : " primary"}`}>
                         {showNewForm ? "Cancel" : "+ Add product"}
                       </button>
@@ -408,12 +610,12 @@ export default function AdminPage() {
                     <div style={{ background: "var(--surface)", border: "2px solid var(--accent)", borderRadius: "var(--r-md)", padding: "1.5rem", marginBottom: "1.5rem" }}>
                       <p style={{ fontWeight: 600, marginBottom: "1.25rem", fontSize: "1rem" }}>New product</p>
                       <form onSubmit={handleCreate}>
-                        <ProductFormFields form={newForm} setForm={setNewForm} fileInputRef={fileInputNewRef} pendingFile={pendingFileNew} />
+                        <ProductFormFields form={newForm} setForm={setNewForm} fileInputRef={fileInputNewRef} pendingFile={pendingFileNew} referenceFile={referenceFileNew} />
                         <div style={{ marginTop: "1.25rem", display: "flex", gap: "0.75rem" }}>
                           <button type="submit" className="btn btn-primary" style={{ minHeight: "auto", padding: "0.5rem 1.25rem" }} disabled={saving}>
                             {saving ? "Saving…" : "Create product"}
                           </button>
-                          <button type="button" onClick={() => setShowNewForm(false)} className="action-btn">Cancel</button>
+                          <button type="button" onClick={() => { setShowNewForm(false); pendingFileNew.current = null; referenceFileNew.current = null; }} className="action-btn">Cancel</button>
                         </div>
                       </form>
                     </div>
@@ -426,12 +628,12 @@ export default function AdminPage() {
                           <div style={{ background: "var(--surface)", border: "2px solid var(--accent)", borderRadius: "var(--r-md)", padding: "1.5rem" }}>
                             <p style={{ fontWeight: 600, marginBottom: "1.25rem" }}>Editing: {p.name}</p>
                             <form onSubmit={handleUpdate}>
-                              <ProductFormFields form={editForm} setForm={setEditForm} fileInputRef={fileInputEditRef} pendingFile={pendingFileEdit} />
+                              <ProductFormFields form={editForm} setForm={setEditForm} fileInputRef={fileInputEditRef} pendingFile={pendingFileEdit} referenceFile={referenceFileEdit} />
                               <div style={{ marginTop: "1.25rem", display: "flex", gap: "0.75rem" }}>
                                 <button type="submit" className="btn btn-primary" style={{ minHeight: "auto", padding: "0.5rem 1.25rem" }} disabled={saving}>
                                   {saving ? "Saving…" : "Save changes"}
                                 </button>
-                                <button type="button" onClick={() => setEditingId(null)} className="action-btn">Cancel</button>
+                                <button type="button" onClick={() => { setEditingId(null); pendingFileEdit.current = null; referenceFileEdit.current = null; }} className="action-btn">Cancel</button>
                               </div>
                             </form>
                           </div>

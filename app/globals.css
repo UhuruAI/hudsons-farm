@@ -655,6 +655,15 @@ footer {
 }
 .form-group select { cursor: pointer; }
 .form-group textarea { min-height: 120px; resize: vertical; }
+.form-group input[type="checkbox"] {
+  appearance: auto;
+  width: 18px;
+  min-height: 18px;
+  height: 18px;
+  padding: 0;
+  cursor: pointer;
+  accent-color: var(--accent);
+}
 .booking-success {
   padding: 1.25rem 1.5rem;
   border-radius: var(--r-sm);
@@ -1844,3 +1853,63 @@ footer {
   color: #ef4444;
 }
 .action-btn.danger:hover { background: #fee2e2; }
+
+.product-checks {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+.product-checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--fg);
+}
+.product-image-toolbar,
+.product-image-actions,
+.product-image-generate-row {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex-wrap: wrap;
+}
+.product-image-toolbar { margin-bottom: 0.625rem; }
+.product-image-panel {
+  display: grid;
+  gap: 1rem;
+}
+.product-image-preview-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.product-image-preview {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.product-image-empty,
+.product-image-status,
+.product-image-error {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+.product-image-empty,
+.product-image-status { color: var(--muted); }
+.product-image-error { color: #ef4444; }
+.product-image-generator {
+  display: grid;
+  gap: 0.875rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--surface-soft);
+}
