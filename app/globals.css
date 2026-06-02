@@ -43,6 +43,13 @@
   --shadow-card: 0 2px 12px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04);
 }
 
+/* ---- Scrollbar ---- */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-hover); }
+* { scrollbar-width: thin; scrollbar-color: var(--accent) transparent; }
+
 /* ---- Reset ---- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
