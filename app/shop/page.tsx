@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useCart } from "@/context/CartContext";
 import type { Id } from "@/convex/_generated/dataModel";
+import { getProductImage } from "@/lib/productImage.js";
 
 const CATEGORIES = ["All", "Baked Goods", "Pantry", "Jam Range", "Spice Range", "Chai"];
 
@@ -28,9 +28,11 @@ export default function ShopPage() {
     name: string;
     price: number;
     image?: string;
+    imageUrl?: string | null;
   }) => {
+    const image = getProductImage(product);
     setAdding(product._id);
-    addItem({ id: product._id, name: product.name, price: product.price, image: product.image });
+    addItem({ id: product._id, name: product.name, price: product.price, image });
     setTimeout(() => setAdding(null), 1200);
   };
 
@@ -64,11 +66,13 @@ export default function ShopPage() {
             <div style={{ textAlign: "center", padding: "4rem 0", color: "var(--muted)" }}>No products found.</div>
           ) : (
             <div className="product-grid">
-              {products.map((p) => (
+              {products.map((p) => {
+                const image = getProductImage(p);
+                return (
                 <div className="product-card" key={p._id}>
                   <Link href={`/product?id=${p._id}`} className="product-img" style={{ display: "block", textDecoration: "none" }}>
-                    {p.image ? (
-                      <Image src={p.image} alt={p.name} width={300} height={300} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    {image ? (
+                      <img src={image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                     ) : (
                       <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-soft)" }}>
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--border)" }}>
@@ -92,7 +96,8 @@ export default function ShopPage() {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

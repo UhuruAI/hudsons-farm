@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
@@ -8,6 +7,7 @@ import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useCart } from "@/context/CartContext";
 import type { Id } from "@/convex/_generated/dataModel";
+import { getProductImage } from "@/lib/productImage.js";
 
 function fmt(cents: number) {
   return `R${(cents / 100).toFixed(0)}`;
@@ -45,9 +45,11 @@ function ProductDetail() {
     );
   }
 
+  const image = getProductImage(product);
+
   const handleAdd = () => {
     for (let i = 0; i < qty; i++) {
-      addItem({ id: product._id, name: product.name, price: product.price, image: product.image });
+      addItem({ id: product._id, name: product.name, price: product.price, image });
     }
     setAdded(true);
     setTimeout(() => setAdded(false), 1400);
@@ -62,10 +64,10 @@ function ProductDetail() {
       </div>
       <section className="section" style={{ paddingTop: "1.5rem" }}>
         <div className="container">
-          <div className="split">
-            <div className="split-img" style={{ borderRadius: "var(--r-lg)", overflow: "hidden", background: "var(--surface-soft)" }}>
-              {product.image ? (
-                <Image src={product.image} alt={product.name} width={600} height={500} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            <div className="split">
+              <div className="split-img" style={{ borderRadius: "var(--r-lg)", overflow: "hidden", background: "var(--surface-soft)" }}>
+              {image ? (
+                <img src={image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
               ) : (
                 <div style={{ width: "100%", height: "400px", display: "flex", alignItems: "center", justifyContent: "center" }}>
                   <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" style={{ color: "var(--border)" }}>

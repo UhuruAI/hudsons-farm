@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -48,7 +47,7 @@ export default function CartPage() {
                     <Link href={`/product?id=${item.id}`} style={{ flexShrink: 0 }}>
                       {item.image ? (
                         <div style={{ width: 88, height: 88, borderRadius: "var(--r-sm)", overflow: "hidden" }}>
-                          <Image src={item.image} alt={item.name} width={88} height={88} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          <img src={item.image} alt={item.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         </div>
                       ) : (
                         <div style={{ width: 88, height: 88, borderRadius: "var(--r-sm)", background: "var(--surface-soft)", display: "flex", alignItems: "center", justifyContent: "center" }}>
