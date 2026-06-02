@@ -42,7 +42,12 @@ export default function Footer() {
       </div>
 
       <div className="footer-legal">
-        <p>© 2025 Hudson&apos;s Farm. All rights reserved.</p>
+        <p>
+          © 2025 Hudson&apos;s Farm. All rights reserved.{" "}
+          <a href="https://uhuruai.com" target="_blank" rel="noopener noreferrer">
+            Built by Uhuru AI
+          </a>
+        </p>
       </div>
     </footer>
   );

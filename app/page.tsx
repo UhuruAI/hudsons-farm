@@ -16,7 +16,7 @@ export default function HomePage() {
           </p>
           <div className="hero-ctas">
             <Link href="/experiences" className="btn btn-primary">Book a Farm Visit</Link>
-            <Link href="/services" className="btn btn-ghost">Our Produce</Link>
+            <Link href="/shop" className="btn btn-ghost">Our Produce</Link>
           </div>
         </div>
       </section>
