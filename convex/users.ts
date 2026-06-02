@@ -72,7 +72,7 @@ export const listClients = query({
 
     const users = await ctx.db.query("users").collect();
 
-    return Promise.all(
+    const clientRows = await Promise.all(
       users.map(async (user) => {
         const profile = await ctx.db
           .query("userProfiles")
@@ -100,6 +100,8 @@ export const listClients = query({
         };
       })
     );
+
+    return clientRows.filter((client) => !client.isAdmin);
   },
 });
 
