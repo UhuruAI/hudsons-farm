@@ -96,7 +96,9 @@ export default function AboutPage() {
           <p className="section-sub">Hudson&apos;s Farm is a hands-on, owner-operated farm. There&apos;s no management team. No corporate structure. Just Peter and the land.</p>
           <div style={{ maxWidth: 560, background: "var(--surface-soft)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", padding: "1.75rem 2rem", marginTop: "1.5rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.25rem" }}>
-              <div style={{ width: 72, height: 72, borderRadius: "50%", background: "var(--accent)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.375rem", fontWeight: 700, flexShrink: 0 }}>PH</div>
+              <div style={{ width: 72, height: 72, borderRadius: "50%", flexShrink: 0, overflow: "hidden", position: "relative" }}>
+                <Image src="/images/mpcfvd99-11-about.png" alt="Peter Hudson" fill style={{ objectFit: "cover", objectPosition: "center 15%" }} />
+              </div>
               <div>
                 <strong style={{ display: "block", fontSize: "1.0625rem" }}>Peter Hudson</strong>
                 <span style={{ display: "inline-block", marginTop: "0.25rem", padding: "0.2rem 0.625rem", background: "rgba(45,90,39,0.1)", borderRadius: "var(--r-full)", fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>Owner &amp; Farmer, Hudson&apos;s Farm</span>
