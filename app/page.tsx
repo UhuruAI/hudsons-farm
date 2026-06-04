@@ -12,7 +12,7 @@ export default function HomePage() {
           <span className="hero-eyebrow">Hudson&apos;s Farm · Magaliesburg, South Africa</span>
           <h1>Grown with purpose, rooted in Africa.</h1>
           <p className="hero-sub">
-            6.8 hectares of organic hemp, gourmet mushrooms, microgreens, and fresh produce, farmed regeneratively in the heart of the Magaliesberg valley.
+            12 hectares of organic hemp, gourmet mushrooms, microgreens, and fresh produce, farmed regeneratively in the heart of the Magaliesberg valley.
           </p>
           <div className="hero-ctas">
             <Link href="/experiences" className="btn btn-primary">Book a Farm Visit</Link>
@@ -25,7 +25,7 @@ export default function HomePage() {
       <section className="section" style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
         <div className="container">
           <div className="stats-bar">
-            <div className="stat"><div className="stat-value">6.8 ha</div><div className="stat-label">Certified organic land</div></div>
+            <div className="stat"><div className="stat-value">12 ha</div><div className="stat-label">Certified organic land</div></div>
             <div className="stat"><div className="stat-value">8</div><div className="stat-label">Produce &amp; experience offerings</div></div>
             <div className="stat"><div className="stat-value">2</div><div className="stat-label">Natural dams on the property</div></div>
             <div className="stat"><div className="stat-value">100%</div><div className="stat-label">Chemical-free, regenerative</div></div>
@@ -75,8 +75,8 @@ export default function HomePage() {
             </div>
             <div className="split-text">
               <span className="eyebrow">The Land</span>
-              <h2>6.8 hectares of living soil</h2>
-              <p>Nestled in the Magaliesberg valley between the Gauteng and North West borders, Hudson&apos;s Farm sits on six-point-eight hectares of active, living farmland.</p>
+              <h2>12 hectares of living soil</h2>
+              <p>Nestled in the Magaliesberg valley between the Gauteng and North West borders, Hudson&apos;s Farm sits on 12 hectares of active, living farmland.</p>
               <p>Two permanent natural dams supply irrigation. A mature pecan orchard lines the eastern edge. Three cultivation zones keep the soil productive year-round.</p>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.5rem" }}>
                 {["No synthetic chemicals", "Two natural dams", "Pecan orchards"].map((f) => (

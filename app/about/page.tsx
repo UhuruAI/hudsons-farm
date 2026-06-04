@@ -26,8 +26,8 @@ export default function AboutPage() {
             </div>
             <div className="split-text">
               <span className="eyebrow">The Farm</span>
-              <h2>6.8 hectares of purpose</h2>
-              <p style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>Located in the Magaliesberg valley, between the Gauteng and North West borders, Hudson&apos;s Farm sits on 6.8 hectares of active, certified organic farmland.</p>
+              <h2>12 hectares of purpose</h2>
+              <p style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>Located in the Magaliesberg valley, between the Gauteng and North West borders, Hudson&apos;s Farm sits on 12 hectares of active, certified organic farmland.</p>
               <p style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>We grow organic hemp, gourmet mushrooms, microgreens, and seasonal vegetables. A mature pecan orchard lines the eastern edge of the property, and two natural dams supply irrigation across all three cultivation zones.</p>
               <p style={{ fontSize: "1.0625rem", lineHeight: 1.75 }}>Everything on this farm is built around one principle: stewardship of the soil. We farm as if the land will outlive us. Because it will.</p>
             </div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
                 <span style={{ display: "inline-block", marginTop: "0.25rem", padding: "0.2rem 0.625rem", background: "rgba(45,90,39,0.1)", borderRadius: "var(--r-full)", fontSize: "0.75rem", fontWeight: 600, color: "var(--accent)" }}>Owner &amp; Farmer, Hudson&apos;s Farm</span>
               </div>
             </div>
-            <p style={{ color: "var(--muted)", fontSize: "0.9375rem", lineHeight: 1.7, marginBottom: "0.75rem" }}>Peter started the farm with one idea: grow real food on living soil, in a place worth farming well. That idea became 6.8 hectares of certified organic land in the Magaliesberg.</p>
+            <p style={{ color: "var(--muted)", fontSize: "0.9375rem", lineHeight: 1.7, marginBottom: "0.75rem" }}>Peter started the farm with one idea: grow real food on living soil, in a place worth farming well. That idea became 12 hectares of certified organic land in the Magaliesberg.</p>
             <p style={{ color: "var(--muted)", fontSize: "0.9375rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>He manages every booking personally, leads every farm tour himself, and makes every decision on the farm. If you call the number below, you&apos;ll reach him directly.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
               <a href="tel:0731615319" className="btn btn-secondary" style={{ minHeight: "auto", padding: "0.5rem 1rem", fontSize: "0.875rem" }}>073 161 5319</a>

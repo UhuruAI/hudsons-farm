@@ -10,7 +10,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 export const metadata: Metadata = {
   title: "Hudson's Farm | Organic & Regenerative",
   description:
-    "6.8 hectares of organic hemp, gourmet mushrooms, microgreens, and fresh produce in Magaliesburg, South Africa.",
+    "12 hectares of organic hemp, gourmet mushrooms, microgreens, and fresh produce in Magaliesburg, South Africa.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

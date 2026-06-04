@@ -36,7 +36,7 @@ export default function TheFarmPage() {
         <div className="hero-overlay" />
         <div className="hero-content">
           <span className="hero-eyebrow">The Land</span>
-          <h1>6.8 Hectares of Living Soil</h1>
+          <h1>12 Hectares of Living Soil</h1>
           <p className="hero-sub">Three cultivation zones, two natural dams, and a closed loop that returns everything the land gives back to itself.</p>
         </div>
       </section>
@@ -90,7 +90,7 @@ export default function TheFarmPage() {
       <section className="section" style={{ paddingTop: "2rem", paddingBottom: "2rem" }}>
         <div className="container">
           <div className="stats-bar">
-            <div className="stat"><div className="stat-value">6.8 ha</div><div className="stat-label">Total farm area</div></div>
+            <div className="stat"><div className="stat-value">12 ha</div><div className="stat-label">Total farm area</div></div>
             <div className="stat"><div className="stat-value">3</div><div className="stat-label">Cultivation zones</div></div>
             <div className="stat"><div className="stat-value">2</div><div className="stat-label">Natural dams on site</div></div>
             <div className="stat"><div className="stat-value">100%</div><div className="stat-label">Chemical-free growing</div></div>
