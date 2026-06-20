@@ -152,15 +152,9 @@ export default function DashboardPage() {
       <section className="section">
         <div className="container">
           {/* Tab bar */}
-          <div style={{ display: "flex", gap: 0, borderBottom: "1px solid var(--border)", marginBottom: "2rem" }}>
+          <div className="dash-tabs">
             {(["orders", "profile", "settings"] as DashTab[]).map((t) => (
-              <button key={t} onClick={() => setTab(t)} style={{
-                padding: "0.75rem 1.375rem", background: "none", border: "none", cursor: "pointer",
-                fontSize: "0.9375rem", fontWeight: 600,
-                color: tab === t ? "var(--accent)" : "var(--muted)",
-                borderBottom: tab === t ? "2px solid var(--accent)" : "2px solid transparent",
-                marginBottom: "-1px", transition: "color 0.15s, border-color 0.15s",
-              }}>
+              <button key={t} onClick={() => setTab(t)} className={`dash-tab${tab === t ? " active" : ""}`}>
                 {t === "orders" ? "My Orders" : t === "profile" ? "My Profile" : "Settings"}
               </button>
             ))}

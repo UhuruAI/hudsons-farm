@@ -16,94 +16,131 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const Leaf = ({ size = 26 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-9 0 0 3 5 3 9a7 7 0 0 1-5 7Z" />
+    <path d="M11 20c0-4 2-7.5 5-9.5" />
+  </svg>
+);
+
 export default function Nav() {
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
   const { count } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [mounted, setMounted] = useState(false);
+
   useEffect(() => setMounted(true), []);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
+
   const toggleTheme = () => setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  const current = (href: string) => (pathname === href ? "page" : undefined);
 
   return (
-    <header>
-      <nav className="nav-inner">
-        <Link href="/" className="logo">
-          Hudson&apos;s <em>Farm</em>
-        </Link>
+    <>
+      <div className="announce">Now booking farm visits · Magaliesburg, South Africa</div>
 
-        <div className="nav-links">
-          {navLinks.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              aria-current={pathname === href ? "page" : undefined}
-            >
-              {label}
+      <header className={`site-header${scrolled ? " scrolled" : ""}`}>
+        {/* Desktop */}
+        <div className="nav-desktop">
+          <Link href="/" className="wordmark" aria-label="Hudson's Farm home">
+            <Leaf size={26} />
+            <span>HUDSON&apos;S FARM</span>
+          </Link>
+          <nav className="mainnav" aria-label="Primary">
+            {navLinks.map(({ href, label }) => (
+              <Link key={href} href={href} aria-current={current(href)}>
+                {label}
+              </Link>
+            ))}
+          </nav>
+          <div className="nav-actions">
+            <button className="nav-icon" onClick={toggleTheme} aria-label="Toggle theme">
+              {mounted && resolvedTheme === "dark" ? (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="4" />
+                  <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                </svg>
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+            <Link href="/auth" className="nav-icon" aria-label="My Account">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21a8 8 0 0 1 16 0" />
+              </svg>
             </Link>
-          ))}
+            <Link href="/cart" className="nav-icon" aria-label="Cart">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="9" cy="20" r="1" />
+                <circle cx="18" cy="20" r="1" />
+                <path d="M2 3h2.2l2.4 12.4a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6" />
+              </svg>
+              {count > 0 && <span className="cart-badge">{count}</span>}
+            </Link>
+          </div>
         </div>
 
-        <div className="nav-actions">
-          <Link href="/cart" className="cart-btn" aria-label="Cart">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-              <line x1="3" y1="6" x2="21" y2="6"/>
-              <path d="M16 10a4 4 0 01-8 0"/>
-            </svg>
-            {count > 0 && <span className="cart-badge">{count}</span>}
-          </Link>
-
-          <Link href="/auth" className="client-login">
-            My Account
-          </Link>
-
-          <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
-            {mounted && resolvedTheme === "dark" ? (
-              <svg className="icon-active" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-              </svg>
-            ) : (
-              <svg className="icon-active" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
-              </svg>
-            )}
+        {/* Mobile */}
+        <div className="nav-mobile">
+          <button className="icon-btn" onClick={() => setMenuOpen(true)} aria-label="Open menu">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
           </button>
-
-          <button
-            className="hamburger"
-            id="hamburger"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((o) => !o)}
-            aria-label="Menu"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
+          <Link href="/" className="wordmark" aria-label="Hudson's Farm home">
+            <Leaf size={20} />
+            <span>HUDSON&apos;S FARM</span>
+          </Link>
+          <div style={{ display: "flex", gap: 14 }}>
+            <button className="nav-icon" onClick={toggleTheme} aria-label="Toggle theme">
+              {mounted && resolvedTheme === "dark" ? (
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+              ) : (
+                <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" /></svg>
+              )}
+            </button>
+            <Link href="/cart" className="nav-icon" aria-label="Cart">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="20" r="1" /><circle cx="18" cy="20" r="1" /><path d="M2 3h2.2l2.4 12.4a1 1 0 0 0 1 .8h8.8a1 1 0 0 0 1-.8L20 7H6" /></svg>
+              {count > 0 && <span className="cart-badge">{count}</span>}
+            </Link>
+          </div>
         </div>
-      </nav>
+      </header>
 
-      <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
-        {navLinks.map(({ href, label }) => (
-          <Link
-            key={href}
-            href={href}
-            aria-current={pathname === href ? "page" : undefined}
-            onClick={() => setMenuOpen(false)}
-          >
-            {label}
-          </Link>
-        ))}
-        <Link href="/auth" className="client-login" onClick={() => setMenuOpen(false)}>
-          My Account
-        </Link>
-      </div>
-    </header>
+      {menuOpen && (
+        <>
+          <div className="drawer-scrim" onClick={() => setMenuOpen(false)} />
+          <aside className="drawer">
+            <div className="drawer-head">
+              <span>HUDSON&apos;S FARM</span>
+              <button className="icon-btn" onClick={() => setMenuOpen(false)} aria-label="Close menu">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg>
+              </button>
+            </div>
+            {navLinks.map(({ href, label }) => (
+              <Link key={href} href={href} aria-current={current(href)} onClick={() => setMenuOpen(false)}>
+                {label}
+              </Link>
+            ))}
+            <Link href="/auth" className="accent" onClick={() => setMenuOpen(false)}>
+              My Account
+            </Link>
+          </aside>
+        </>
+      )}
+    </>
   );
 }

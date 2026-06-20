@@ -69,33 +69,31 @@ export default function ShopPage() {
               {products.map((p) => {
                 const image = getProductImage(p);
                 return (
-                <div className="product-card" key={p._id}>
-                  <Link href={`/product?id=${p._id}`} className="product-img" style={{ display: "block", textDecoration: "none" }}>
-                    {image ? (
-                      <img src={image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    ) : (
-                      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--surface-soft)" }}>
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--border)" }}>
-                          <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>
-                        </svg>
+                  <div className="product-card" key={p._id}>
+                    <Link href={`/product?id=${p._id}`} className="product-img">
+                      {image ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      ) : (
+                        <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-alt)" }}>
+                          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ color: "var(--border)" }}>
+                            <rect x="3" y="3" width="18" height="18" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
+                          </svg>
+                        </div>
+                      )}
+                    </Link>
+                    <div className="product-body">
+                      <p className="product-category">{p.category}</p>
+                      <Link href={`/product?id=${p._id}`} className="product-name">{p.name}</Link>
+                      <p className="product-desc">{p.description}</p>
+                      <div className="product-footer">
+                        <span className="product-price">{fmt(p.price)}</span>
+                        <button className={`add-to-cart-btn${adding === p._id ? " added" : ""}`} onClick={() => handleAdd(p)}>
+                          {adding === p._id ? "Added ✓" : "+ Add"}
+                        </button>
                       </div>
-                    )}
-                  </Link>
-                  <div className="product-body">
-                    <p className="product-category">{p.category}</p>
-                    <Link href={`/product?id=${p._id}`} className="product-name" style={{ textDecoration: "none" }}>{p.name}</Link>
-                    <p className="product-desc">{p.description}</p>
-                    <div className="product-footer">
-                      <span className="product-price">{fmt(p.price)}</span>
-                      <button
-                        className={`add-to-cart-btn${adding === p._id ? " added" : ""}`}
-                        onClick={() => handleAdd(p)}
-                      >
-                        {adding === p._id ? "Added ✓" : "+ Add"}
-                      </button>
                     </div>
                   </div>
-                </div>
                 );
               })}
             </div>
@@ -103,13 +101,13 @@ export default function ShopPage() {
         </div>
       </section>
 
-      <div style={{ background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "1.25rem 0" }}>
-        <div className="container" style={{ display: "flex", flexWrap: "wrap", gap: "1rem", alignItems: "center", justifyContent: "center", color: "var(--muted)", fontSize: "0.875rem" }}>
-          <span>🚚 Free delivery on orders over R500</span>
+      <div className="shipping-strip">
+        <div className="container">
+          <span>Free delivery on orders over R500</span>
           <span>·</span>
-          <span>📦 R80 flat-rate delivery</span>
+          <span>R80 flat-rate delivery</span>
           <span>·</span>
-          <span>🔒 Secure payment via Paystack</span>
+          <span>Secure payment via Paystack</span>
         </div>
       </div>
     </main>

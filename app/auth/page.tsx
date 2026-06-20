@@ -85,30 +85,26 @@ export default function AuthPage() {
 
       <section className="section">
         <div className="container" style={{ maxWidth: 440, margin: "0 auto" }}>
-          <div style={{ display: "flex", border: "1px solid var(--border)", borderRadius: "var(--r-md)", overflow: "hidden", marginBottom: "2rem" }}>
-            {(["signIn", "signUp"] as Flow[]).map((f) => (
-              <button
-                key={f}
-                onClick={() => { setFlow(f); setError(""); setSuccess(""); }}
-                style={{
-                  flex: 1, padding: "0.75rem", border: "none", cursor: "pointer", fontSize: "0.9375rem", fontWeight: 600,
-                  background: flow === f ? "var(--accent)" : "transparent",
-                  color: flow === f ? "#fff" : "var(--muted)",
-                  transition: "background 0.15s",
-                }}
-              >
-                {f === "signIn" ? "Sign in" : "Create account"}
-              </button>
-            ))}
-          </div>
-
-          {success && (
-            <div style={{ padding: "0.875rem 1rem", background: "#d1fae5", border: "1px solid #6ee7b7", borderRadius: "var(--r-sm)", color: "#065f46", fontSize: "0.875rem", marginBottom: "1.25rem", fontWeight: 500 }}>
-              {success}
+          <div className="auth-card">
+            <div className="auth-crest">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-9 0 0 3 5 3 9a7 7 0 0 1-5 7Z" /><path d="M11 20c0-4 2-7.5 5-9.5" /></svg>
+              <span>HUDSON&apos;S FARM</span>
             </div>
-          )}
 
-          <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", padding: "2rem" }}>
+            <div className="auth-tabs">
+              {(["signIn", "signUp"] as Flow[]).map((f) => (
+                <button
+                  key={f}
+                  className={`auth-tab${flow === f ? " active" : ""}`}
+                  onClick={() => { setFlow(f); setError(""); setSuccess(""); }}
+                >
+                  {f === "signIn" ? "Sign in" : "Register"}
+                </button>
+              ))}
+            </div>
+
+            {success && <div className="booking-success" style={{ marginBottom: "1.25rem", padding: "0.875rem 1rem" }}>{success}</div>}
+
             <form onSubmit={handleSubmit}>
               <div className="form-group" style={{ marginBottom: "1rem" }}>
                 <label>Email address</label>
@@ -125,13 +121,9 @@ export default function AuthPage() {
                 </div>
               )}
 
-              {error && (
-                <div style={{ padding: "0.75rem 1rem", background: "#fee2e2", border: "1px solid #fca5a5", borderRadius: "var(--r-sm)", color: "#991b1b", fontSize: "0.875rem", marginBottom: "1rem" }}>
-                  {error}
-                </div>
-              )}
+              {error && <div className="auth-error">{error}</div>}
 
-              <button type="submit" className="btn btn-primary" style={{ width: "100%" }} disabled={submitting}>
+              <button type="submit" className="btn btn-solid" style={{ width: "100%" }} disabled={submitting}>
                 {submitting ? "Please wait…" : flow === "signIn" ? "Sign in" : "Create account"}
               </button>
             </form>

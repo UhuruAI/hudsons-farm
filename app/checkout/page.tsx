@@ -188,10 +188,10 @@ export default function CheckoutPage() {
 
       <section className="section">
         <div className="container">
-          <form onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: "1fr min(400px, 100%)", gap: "3rem", alignItems: "start" }}>
+          <form onSubmit={handleSubmit} className="checkout-layout">
             {/* Delivery details */}
-            <div>
-              <h2 style={{ fontSize: "1.25rem", marginBottom: "1.25rem" }}>Delivery details</h2>
+            <div className="checkout-section">
+              <h3>Delivery details</h3>
               <div className="form-grid">
                 <div className="form-group full">
                   <label>Full name *</label>
@@ -232,47 +232,31 @@ export default function CheckoutPage() {
 
             {/* Order summary + pay */}
             <div>
-              <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", padding: "1.5rem", position: "sticky", top: "1.5rem" }}>
-                <h2 style={{ fontSize: "1.25rem", marginBottom: "1.25rem" }}>Order summary</h2>
+              <div className="order-summary">
+                <h3>Order summary</h3>
 
                 {items.map((item) => (
-                  <div key={item.id} style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9375rem", marginBottom: "0.5rem" }}>
-                    <span style={{ color: "var(--muted)" }}>{item.name} × {item.quantity}</span>
+                  <div key={item.id} className="summary-row">
+                    <span>{item.name} × {item.quantity}</span>
                     <span>{fmt(item.price * item.quantity)}</span>
                   </div>
                 ))}
 
-                <div style={{ borderTop: "1px solid var(--border)", marginTop: "0.75rem", paddingTop: "0.75rem" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9375rem", marginBottom: "0.375rem" }}>
-                    <span style={{ color: "var(--muted)" }}>Subtotal</span><span>{fmt(subtotal)}</span>
+                <div style={{ borderTop: "1px solid var(--border)", marginTop: 12, paddingTop: 12 }}>
+                  <div className="summary-row"><span>Subtotal</span><span>{fmt(subtotal)}</span></div>
+                  <div className={`summary-row${deliveryFee === 0 ? " free" : ""}`}>
+                    <span>Delivery</span><span>{deliveryFee === 0 ? "Free" : fmt(deliveryFee)}</span>
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9375rem", marginBottom: "0.75rem" }}>
-                    <span style={{ color: "var(--muted)" }}>Delivery</span>
-                    <span style={{ color: deliveryFee === 0 ? "var(--accent)" : "inherit" }}>
-                      {deliveryFee === 0 ? "Free" : fmt(deliveryFee)}
-                    </span>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 700, fontSize: "1.125rem", marginBottom: "1.25rem" }}>
-                    <span>Total</span><span>{fmt(total)}</span>
-                  </div>
+                  <div className="summary-row total"><span>Total</span><span>{fmt(total)}</span></div>
                 </div>
 
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  style={{ width: "100%" }}
-                  disabled={isSubmitting || !scriptReady}
-                >
+                <button type="submit" className="btn btn-solid" style={{ width: "100%", marginTop: 20 }} disabled={isSubmitting || !scriptReady}>
                   {isSubmitting ? "Processing…" : `Pay ${fmt(total)} via Paystack`}
                 </button>
 
-                <p style={{ fontSize: "0.75rem", color: "var(--muted)", textAlign: "center", marginTop: "0.75rem" }}>
-                  🔒 Secure payment via Paystack
-                </p>
+                <p className="summary-note">Secure payment via Paystack</p>
 
-                <Link href="/cart" style={{ display: "block", textAlign: "center", marginTop: "0.5rem", color: "var(--muted)", fontSize: "0.875rem", textDecoration: "none" }}>
-                  ← Back to cart
-                </Link>
+                <Link href="/cart" style={{ display: "block", textAlign: "center", marginTop: 8, color: "var(--muted)", fontSize: 14 }}>← Back to cart</Link>
               </div>
             </div>
           </form>

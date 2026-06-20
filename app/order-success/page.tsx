@@ -21,32 +21,29 @@ function OrderSuccessContent() {
 
   return (
     <section className="section">
-      <div className="container" style={{ maxWidth: 560, margin: "0 auto", textAlign: "center" }}>
-        <div style={{ width: 72, height: 72, borderRadius: "50%", background: "var(--accent)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem", fontSize: "2rem" }}>
-          ✓
+      <div className="success-card">
+        <div className="success-icon">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
         </div>
-
         <span className="eyebrow">Order placed</span>
-        <h1 style={{ fontSize: "clamp(1.75rem, 4vw, 2.5rem)", marginBottom: "1rem" }}>Payment successful!</h1>
-        <p style={{ color: "var(--muted)", fontSize: "1.0625rem", lineHeight: 1.7, marginBottom: "2rem" }}>
+        <h1 style={{ fontSize: "clamp(28px,4vw,40px)", margin: "12px 0 16px" }}>Thank you, your order is confirmed</h1>
+        <p style={{ color: "var(--muted)", fontSize: 16.5, lineHeight: 1.7 }}>
           Your order has been confirmed. We&apos;ll get it packed and on its way. You&apos;ll receive an email confirmation once it ships.
         </p>
 
         {ref && (
-          <div style={{ background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "1rem 1.5rem", marginBottom: "2rem", fontSize: "0.9375rem" }}>
-            <p style={{ color: "var(--muted)", fontSize: "0.8125rem", marginBottom: "0.25rem" }}>Payment reference</p>
-            <p style={{ fontWeight: 700, fontFamily: "monospace", letterSpacing: "0.05em" }}>{ref}</p>
+          <div className="success-ref">
+            <span style={{ color: "var(--muted)", fontWeight: 400, marginRight: 8 }}>Reference</span>
+            <span style={{ fontFamily: "monospace" }}>{ref}</span>
           </div>
         )}
 
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
-          {id && (
-            <Link href="/dashboard" className="btn btn-primary">View my orders</Link>
-          )}
-          <Link href="/shop" className="btn btn-secondary">Continue shopping</Link>
+        <div className="success-actions">
+          {id && <Link href="/dashboard" className="btn btn-solid">View my orders</Link>}
+          <Link href="/shop" className="btn btn-ghost">Continue shopping</Link>
         </div>
 
-        <p style={{ marginTop: "2rem", fontSize: "0.875rem", color: "var(--muted)" }}>
+        <p style={{ marginTop: "2rem", fontSize: 14, color: "var(--muted)" }}>
           Questions? Call Peter on <a href="tel:0731615319" style={{ color: "var(--accent)" }}>073 161 5319</a>
         </p>
       </div>
