@@ -19,9 +19,11 @@ function ProductDetail() {
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [descOpen, setDescOpen] = useState(true);
+  const [addedRelated, setAddedRelated] = useState<string | null>(null);
   const { addItem } = useCart();
 
   const product = useQuery(api.products.get, id ? { id: id as Id<"products"> } : "skip");
+  const allItems = useQuery(api.products.list, {});
 
   if (!id) {
     return (
@@ -44,6 +46,18 @@ function ProductDetail() {
   }
 
   const image = getProductImage(product);
+
+  const pool = (allItems ?? []).filter((p) => p._id !== product._id);
+  const related = [
+    ...pool.filter((p) => p.category === product.category),
+    ...pool.filter((p) => p.category !== product.category),
+  ].slice(0, 4);
+
+  const quickAdd = (p: (typeof related)[number]) => {
+    addItem({ id: p._id, name: p.name, price: p.price, image: getProductImage(p) });
+    setAddedRelated(p._id);
+    setTimeout(() => setAddedRelated(null), 1400);
+  };
 
   const handleAdd = () => {
     for (let i = 0; i < qty; i++) {
@@ -119,6 +133,34 @@ function ProductDetail() {
             <Link href="/cart" className="pdp-cart-link">View cart →</Link>
           </div>
         </div>
+
+        {related.length > 0 && (
+          <section className="related-section">
+            <h2 className="related-title">You may also like</h2>
+            <div className="related-grid">
+              {related.map((p) => {
+                const img = getProductImage(p);
+                return (
+                  <div className="related-card" key={p._id}>
+                    <Link href={`/product?id=${p._id}`} className="related-media">
+                      {img ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={img} alt={p.name} />
+                      ) : (
+                        <span className="related-media-empty" />
+                      )}
+                    </Link>
+                    <Link href={`/product?id=${p._id}`} className="related-name">{p.name}</Link>
+                    <p className="related-price">{fmt(p.price)}</p>
+                    <button className="related-add" onClick={() => quickAdd(p)}>
+                      {addedRelated === p._id ? "Added ✓" : "Add to cart"}
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </div>
     </section>
   );
