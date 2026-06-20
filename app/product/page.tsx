@@ -18,6 +18,7 @@ function ProductDetail() {
   const id = searchParams.get("id");
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [descOpen, setDescOpen] = useState(true);
   const { addItem } = useCart();
 
   const product = useQuery(api.products.get, id ? { id: id as Id<"products"> } : "skip");
@@ -53,51 +54,69 @@ function ProductDetail() {
   };
 
   return (
-    <section className="section">
+    <section className="section" style={{ paddingTop: "clamp(32px,4vw,56px)" }}>
       <div className="container">
-        <nav style={{ marginBottom: 28, fontFamily: "var(--font-body)", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>
-          <Link href="/shop" style={{ color: "var(--muted)" }}>Shop</Link> · {product.category} · <span style={{ color: "var(--ink)" }}>{product.name}</span>
+        <nav className="pdp-crumb">
+          <Link href="/shop">Shop</Link>
+          <span>/</span>
+          <Link href="/shop">{product.category}</Link>
+          <span>/</span>
+          <span className="current">{product.name}</span>
         </nav>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "clamp(28px,4vw,56px)" }} className="product-detail-grid">
-          <div style={{ position: "relative", aspectRatio: "1", background: "var(--bg-alt)", border: "1px solid var(--border-soft)", overflow: "hidden" }}>
+
+        <div className="pdp-grid">
+          {/* Image */}
+          <div className="pdp-media">
             {image ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={image} alt={product.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img src={image} alt={product.name} />
             ) : (
-              <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div className="pdp-media-empty">
                 <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" style={{ color: "var(--border)" }}><rect x="3" y="3" width="18" height="18" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
               </div>
             )}
           </div>
-          <div>
-            <span className="eyebrow">{product.category}</span>
-            <h1 style={{ fontSize: "clamp(28px,4vw,42px)", margin: "12px 0 16px" }}>{product.name}</h1>
-            <p style={{ fontSize: 16.5, color: "var(--muted)", lineHeight: 1.7 }}>{product.description}</p>
-            <p style={{ fontFamily: "var(--font-head)", fontWeight: 400, fontSize: 32, color: "var(--ink)", margin: "20px 0" }}>{fmt(product.price)}</p>
 
-            <div style={{ display: "flex", alignItems: "stretch", gap: 14, marginBottom: 24 }}>
+          {/* Details */}
+          <div className="pdp-info">
+            <span className="pdp-eyebrow">{product.category}</span>
+            <h1 className="pdp-title">{product.name}</h1>
+            <p className="pdp-price">{fmt(product.price)}</p>
+
+            <hr className="pdp-divider" />
+
+            <div className="pdp-ship">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M1 3h13v13H1zM14 8h4l3 3v5h-7" /><circle cx="6" cy="18" r="1.6" /><circle cx="18" cy="18" r="1.6" />
+              </svg>
+              <span>Free delivery over R500 · R80 flat-rate nationwide</span>
+            </div>
+
+            <hr className="pdp-divider" />
+
+            <span className="pdp-qty-label">Quantity</span>
+            <div className="pdp-buy">
               <div className="qty-control">
                 <button className="qty-btn" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease quantity">−</button>
                 <span className="qty-display">{qty}</span>
                 <button className="qty-btn" onClick={() => setQty((q) => q + 1)} aria-label="Increase quantity">+</button>
               </div>
-              <button className="btn btn-solid" style={{ flex: 1 }} onClick={handleAdd}>
-                {added ? "Added to cart ✓" : "Add to cart"}
-              </button>
             </div>
+            <button className="btn btn-solid" style={{ width: "100%", marginTop: 16 }} onClick={handleAdd}>
+              {added ? "Added to cart ✓" : "Add to cart"}
+            </button>
 
-            <ul className="feature-list" style={{ marginTop: 0 }}>
-              {["Free delivery on orders over R500", "R80 flat-rate delivery", "Secure payment via Paystack"].map((t) => (
-                <li key={t}>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
-                  {t}
-                </li>
-              ))}
-            </ul>
+            <hr className="pdp-divider" />
 
-            <div style={{ marginTop: 24 }}>
-              <Link href="/cart" className="btn btn-ghost">View cart</Link>
-            </div>
+            <button className="pdp-accordion" onClick={() => setDescOpen((o) => !o)} aria-expanded={descOpen}>
+              <span>Description</span>
+              <span className="pdp-acc-icon">{descOpen ? "–" : "+"}</span>
+            </button>
+            {descOpen && <p className="pdp-desc">{product.description}</p>}
+
+            <hr className="pdp-divider" />
+
+            <Link href="/cart" className="pdp-cart-link">View cart →</Link>
           </div>
         </div>
       </div>
