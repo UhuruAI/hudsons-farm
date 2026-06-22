@@ -49,9 +49,9 @@ export default function CartPage() {
                   <tbody>
                     {items.map((item) => (
                       <tr key={item.id}>
-                        <td>
-                          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
-                            <Link href={`/product?id=${item.id}`} style={{ flexShrink: 0 }}>
+                        <td className="cart-product-cell">
+                          <div className="cart-product-info">
+                            <Link href={`/product?id=${item.id}`} className="cart-product-image-link">
                               {item.image ? (
                                 // eslint-disable-next-line @next/next/no-img-element
                                 <img className="cart-item-img" src={item.image} alt={item.name} />
@@ -59,14 +59,14 @@ export default function CartPage() {
                                 <div className="cart-item-img" style={{ background: "var(--bg-alt)" }} />
                               )}
                             </Link>
-                            <div>
+                            <div className="cart-product-copy">
                               <Link href={`/product?id=${item.id}`} className="cart-item-name" style={{ color: "var(--ink)" }}>{item.name}</Link>
                               <div className="cart-item-cat">{fmt(item.price)} each</div>
                             </div>
                           </div>
                         </td>
-                        <td>
-                          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <td className="cart-quantity-cell">
+                          <div className="cart-item-controls">
                             <div className="qty-control" style={{ height: 36 }}>
                               <button className="qty-btn" style={{ height: 34, width: 32, fontSize: 16 }} onClick={() => updateQty(item.id, item.quantity - 1)} aria-label="Decrease">−</button>
                               <span className="qty-display" style={{ height: 34, lineHeight: "34px", width: 38 }}>{item.quantity}</span>
@@ -75,7 +75,7 @@ export default function CartPage() {
                             <button className="cart-remove-btn" onClick={() => removeItem(item.id)}>Remove</button>
                           </div>
                         </td>
-                        <td><strong>{fmt(item.price * item.quantity)}</strong></td>
+                        <td className="cart-total-cell"><strong>{fmt(item.price * item.quantity)}</strong></td>
                       </tr>
                     ))}
                   </tbody>

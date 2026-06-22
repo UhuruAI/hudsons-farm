@@ -715,9 +715,14 @@ footer.site-footer { font-family: var(--font-body); }
 }
 .cart-table th:last-child, .cart-table td:last-child { text-align: right; }
 .cart-table td { padding: 18px 0; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
+.cart-product-info { display: flex; gap: 16px; align-items: center; min-width: 0; }
+.cart-product-image-link { flex-shrink: 0; }
+.cart-product-copy { min-width: 0; }
 .cart-item-img { width: 72px; height: 72px; object-fit: cover; border: 1px solid var(--border-soft); }
-.cart-item-name { font-size: 15px; }
+.cart-item-name { display: block; font-size: 15px; line-height: 1.45; overflow-wrap: anywhere; }
 .cart-item-cat { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.cart-item-controls { display: flex; align-items: center; gap: 12px; justify-content: flex-start; }
+.cart-quantity-cell, .cart-total-cell { white-space: nowrap; }
 .cart-remove-btn { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 13px; padding: 4px 8px; transition: color var(--t); }
 .cart-remove-btn:hover { color: #c0392b; }
 .order-summary { background: var(--bg-alt); border: 1px solid var(--border); padding: 28px; position: sticky; top: 110px; }
@@ -730,6 +735,30 @@ footer.site-footer { font-family: var(--font-body); }
 .empty-cart { text-align: center; padding: clamp(3rem, 8vw, 5rem) 1.5rem; }
 .empty-cart h2 { font-size: 24px; margin-bottom: 8px; }
 .empty-cart p { color: var(--muted); margin-bottom: 1.5rem; }
+@media (max-width: 640px) {
+  .cart-table thead { display: none; }
+  .cart-table,
+  .cart-table tbody { display: block; width: 100%; }
+  .cart-table tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .cart-table td {
+    display: block;
+    padding: 0;
+    border-bottom: 0;
+  }
+  .cart-table td:last-child { text-align: right; }
+  .cart-product-cell { grid-column: 1 / -1; }
+  .cart-product-info { align-items: flex-start; gap: 14px; }
+  .cart-item-img { width: 82px; height: 82px; }
+  .cart-item-name { font-size: 16px; line-height: 1.42; }
+  .cart-item-controls { flex-wrap: wrap; gap: 10px; }
+  .cart-total-cell { align-self: center; font-size: 16px; }
+}
 .pay-btn, .checkout-section { font-family: var(--font-body); }
 .pay-btn {
   width: 100%; padding: 16px 24px; font-weight: 600; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
