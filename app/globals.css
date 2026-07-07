@@ -604,7 +604,7 @@ footer.site-footer { font-family: var(--font-body); }
   font-family: var(--font-body); font-size: 13px; color: var(--muted); background: var(--bg-alt);
 }
 .map-embed { border: 1px solid var(--border); overflow: hidden; margin-top: 2rem; aspect-ratio: 16/9; }
-.map-embed iframe { width: 100%; height: 100%; border: none; display: block; filter: grayscale(1); }
+.map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
 .map-figure { border: 1px solid var(--border); background: var(--bg-alt); }
 .map-figure figcaption {
   padding: 14px 18px; font-family: var(--font-body); font-size: 14px; color: var(--muted);
