@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export const metadata = { title: "About | Hudson's Farm" };
+export const metadata = { title: "About | Revayah Sanctuary" };
 
 const commitments = [
   { icon: <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />, title: "No synthetic inputs", desc: "No herbicides, no pesticides, no synthetic fertilisers. Ever. We use compost, cover crops, and beneficial insects instead." },
@@ -14,13 +14,13 @@ export default function AboutPage() {
     <main>
       {/* HERO */}
       <section className="hero compact">
-        <Image src="/images/mpcfvd99-11-about.png" alt="About Hudson's Farm" fill sizes="100vw" className="hero-bg" priority />
+        <Image src="/images/mpcfvd99-11-about.png" alt="About Revayah Sanctuary" fill sizes="100vw" className="hero-bg" priority />
         <div className="hero-overlay" />
         <div className="hero-inner">
           <div className="hero-content">
             <span className="hero-eyebrow">Our Story</span>
-            <h1>Organic. Regenerative. Rooted in Africa.</h1>
-            <p className="hero-sub">Hudson&apos;s Farm is a working organic farm in the Magaliesberg valley, one of the oldest mountain ranges in the world.</p>
+            <h1>Heritage. Regeneration. Rooted in Africa.</h1>
+            <p className="hero-sub">Revayah Sanctuary is a working regenerative farm becoming a heritage eco-resort, in the foothills of the Magaliesberg — one of the oldest mountain ranges in the world.</p>
           </div>
         </div>
       </section>
@@ -32,11 +32,11 @@ export default function AboutPage() {
         </div>
         <div className="split-body plain">
           <div className="split-inner" data-reveal>
-            <span className="eyebrow">The Farm</span>
+            <span className="eyebrow">The Sanctuary</span>
             <h2>12 hectares of purpose</h2>
-            <p>Located in the Magaliesberg valley, between the Gauteng and North West borders, Hudson&apos;s Farm sits on 12 hectares of active, certified organic farmland.</p>
-            <p>We grow organic hemp, gourmet mushrooms, microgreens, and seasonal vegetables. A mature pecan orchard lines the eastern edge of the property, and two natural dams supply irrigation across all three cultivation zones.</p>
-            <p>Everything on this farm is built around one principle: stewardship of the soil. We farm as if the land will outlive us. Because it will.</p>
+            <p>Located in Maanhaarrand, North West Province, Revayah Sanctuary sits on 12 hectares of active, living farmland at the foot of the Magaliesberg.</p>
+            <p>We grow organic hemp, gourmet mushrooms, microgreens, and seasonal vegetables. A mature pecan orchard lines the eastern edge of the property, and two natural dams supply irrigation across the land.</p>
+            <p><strong>From Hudson&apos;s Farm to Revayah Sanctuary:</strong> this land began as Peter Hudson&apos;s organic farm. The name has grown with the vision — a sanctuary weaving heritage, farming, education, and hospitality into one regenerative whole. Same soil, same hands, bigger story.</p>
           </div>
         </div>
       </section>
@@ -54,7 +54,7 @@ export default function AboutPage() {
             <p>We don&apos;t till unnecessarily. We compost everything. We let the dams do the work. We rotate. We observe. We adapt.</p>
             <blockquote className="pull-quote">
               <p>&ldquo;Regenerative farming is farming as if the next generation matters. Because they do.&rdquo;</p>
-              <cite>Peter Hudson, Owner, Hudson&apos;s Farm</cite>
+              <cite>Peter Hudson, Founder, Revayah Sanctuary</cite>
             </blockquote>
           </div>
         </div>
@@ -84,9 +84,9 @@ export default function AboutPage() {
       <section className="section alt">
         <div className="container">
           <div className="section-head" data-reveal>
-            <span className="eyebrow">The Person Behind the Farm</span>
+            <span className="eyebrow">The Person Behind the Sanctuary</span>
             <h2>Meet Peter Hudson</h2>
-            <p className="section-sub">Hudson&apos;s Farm is a hands-on, owner-operated farm. There&apos;s no management team. No corporate structure. Just Peter and the land.</p>
+            <p className="section-sub">Revayah Sanctuary is hands-on and founder-led. There&apos;s no management team. No corporate structure. Just Peter and the land.</p>
           </div>
           <div className="panel" data-reveal style={{ maxWidth: 620, marginTop: "clamp(28px,3vw,40px)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
@@ -95,10 +95,10 @@ export default function AboutPage() {
               </div>
               <div>
                 <strong style={{ display: "block", fontFamily: "var(--font-head)", fontSize: 20 }}>Peter Hudson</strong>
-                <span style={{ display: "inline-block", marginTop: 6, padding: "4px 12px", border: "1px solid var(--accent)", fontSize: 12, fontWeight: 600, color: "var(--accent)" }}>Owner &amp; Farmer, Hudson&apos;s Farm</span>
+                <span style={{ display: "inline-block", marginTop: 6, padding: "4px 12px", border: "1px solid var(--accent)", fontSize: 12, fontWeight: 600, color: "var(--accent)" }}>Founder, Revayah Sanctuary</span>
               </div>
             </div>
-            <p style={{ color: "var(--muted)", fontSize: 15, lineHeight: 1.7, marginBottom: 12 }}>Peter started the farm with one idea: grow real food on living soil, in a place worth farming well. That idea became 12 hectares of certified organic land in the Magaliesberg.</p>
+            <p style={{ color: "var(--muted)", fontSize: 15, lineHeight: 1.7, marginBottom: 12 }}>Peter started the farm with one idea: grow real food on living soil, in a place worth farming well. That idea became 12 hectares of regenerative land in the Magaliesberg foothills — and is now growing into a sanctuary that honours the land&apos;s history as much as its soil.</p>
             <p style={{ color: "var(--muted)", fontSize: 15, lineHeight: 1.7, marginBottom: 20 }}>He manages every booking personally, leads every farm tour himself, and makes every decision on the farm. If you call the number below, you&apos;ll reach him directly.</p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
               <a href="tel:0731615319" className="btn btn-ghost" style={{ padding: "11px 20px" }}>073 161 5319</a>

@@ -9,9 +9,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 import RevealOnScroll from "@/components/RevealOnScroll";
 
 export const metadata: Metadata = {
-  title: "Hudson's Farm | Organic & Regenerative",
+  title: "Revayah Sanctuary | Heritage Eco-Resort & Regenerative Farm",
   description:
-    "12 hectares of organic hemp, gourmet mushrooms, microgreens, and fresh produce in Magaliesburg, South Africa.",
+    "A heritage eco-resort and regenerative farm in Maanhaarrand, North West Province — heritage trails, hemp training academy, farm experiences, and the Revival Hub shop.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

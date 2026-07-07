@@ -16,7 +16,7 @@ export default function ContactPage() {
   const details = [
     { label: "Phone", href: "tel:0731615319", value: "073 161 5319", icon: <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.69 9.69 19.79 19.79 0 011.61 1 2 2 0 013.6.5h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L7.91 8a16 16 0 006.29 6.29l.95-.95a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 15.5v1.42z" /> },
     { label: "Email", href: "mailto:mzanziprince@gmail.com", value: "mzanziprince@gmail.com", icon: <><rect x="2" y="4" width="20" height="16" rx="0" /><path d="M2 9.5l10 6.5 10-6.5" /></> },
-    { label: "Location", href: null, value: "Magaliesburg, South Africa", sub: "Exact directions shared on booking confirmation.", icon: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></> },
+    { label: "Location", href: null, value: "Maanhaarrand, North West Province", sub: "GPS -25.890432, 27.449568 · Exact directions shared on booking confirmation.", icon: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" /></> },
     { label: "Response time", href: null, value: "Peter typically responds within one business day by phone or email.", icon: <><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></> },
   ];
 
@@ -24,7 +24,7 @@ export default function ContactPage() {
     <main>
       {/* HERO */}
       <section className="hero compact">
-        <Image src="/images/mpcfvd90-10-hero.png" alt="Contact Hudson's Farm" fill sizes="100vw" className="hero-bg" priority />
+        <Image src="/images/mpcfvd90-10-hero.png" alt="Contact Revayah Sanctuary" fill sizes="100vw" className="hero-bg" priority />
         <div className="hero-overlay" />
         <div className="hero-inner">
           <div className="hero-content">
@@ -56,15 +56,15 @@ export default function ContactPage() {
 
               <p style={{ fontSize: 11, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "var(--muted)", marginTop: 24, marginBottom: 12 }}>Booking types available</p>
               <div className="tag-row">
-                {["Farm Tours", "Fresh Produce Pickup", "Mushroom Harvest", "Microgreens Subscription", "Agri-Tourism Stay", "Hemp Cultivation Enquiry"].map((t) => (
+                {["Farm Tours", "Heritage Trail / Museum", "Fresh Produce Pickup", "Mushroom Harvest", "Agri-Tourism Stay", "Hemp Academy Enquiry"].map((t) => (
                   <span className="tag" key={t}>{t}</span>
                 ))}
               </div>
 
               <div className="map-embed">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57619.47!2d27.53!3d-25.99!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e9531f98c4e3ba3%3A0x3e0d02b3a6c3c6a0!2sMagaliesburg%2C%20South%20Africa!5e0!3m2!1sen!2sza!4v1"
-                  width="600" height="300" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Magaliesburg map"
+                  src="https://maps.google.com/maps?q=-25.890432,27.449568&z=15&t=k&output=embed"
+                  width="600" height="300" allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" title="Revayah Sanctuary map"
                 />
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function ContactPage() {
                     <button type="submit" className="btn btn-solid" style={{ width: "100%", marginTop: 20 }} disabled={status === "sending"}>
                       {status === "sending" ? "Sending…" : "Send booking request"}
                     </button>
-                    <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 12 }}>By submitting you agree to be contacted by Hudson&apos;s Farm. No spam, ever.</p>
+                    <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center", marginTop: 12 }}>By submitting you agree to be contacted by Revayah Sanctuary. No spam, ever.</p>
                   </form>
                 )}
               </div>
@@ -111,7 +111,7 @@ export default function ContactPage() {
                 <h3 style={{ fontSize: 18, marginBottom: 16 }}>What happens after you book</h3>
                 {[
                   { n: "1", title: "Peter confirms your booking", desc: "Usually within one business day by phone or email. He'll confirm the date and any special requirements." },
-                  { n: "2", title: "You receive directions", desc: "Exact farm directions and parking instructions are shared on confirmation. Magaliesburg is 90 minutes from Johannesburg." },
+                  { n: "2", title: "You receive directions", desc: "Exact directions and parking instructions are shared on confirmation. Maanhaarrand is about 90 minutes from Johannesburg." },
                   { n: "3", title: "Arrive and enjoy", desc: "Walk the farm, pick your produce, or settle in for your stay. Come hungry. The valley is beautiful." },
                 ].map(({ n, title, desc }) => (
                   <div className="step-row" key={n}>

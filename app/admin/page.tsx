@@ -55,7 +55,7 @@ const IMAGE_PROMPTS = [
     id: "farm-studio",
     label: "Farm studio product",
     prompt:
-      "Create a studio-quality square ecommerce product photo of {name}. Keep the actual product faithful to the reference image. Place it on a warm neutral stone surface with soft natural window light, subtle Hudson's Farm organic farm styling, clean background, realistic shadows, premium but honest artisanal look, no text or logos added.",
+      "Create a studio-quality square ecommerce product photo of {name}. Keep the actual product faithful to the reference image. Place it on a warm neutral stone surface with soft natural window light, subtle Revayah Sanctuary organic farm styling, clean background, realistic shadows, premium but honest artisanal look, no text or logos added.",
   },
   {
     id: "baked-goods",
@@ -92,7 +92,7 @@ function resolveImagePrompt(form: ProductForm) {
   const selected = IMAGE_PROMPTS.find((prompt) => prompt.id === form.imagePrompt) ?? IMAGE_PROMPTS[0];
   const template = selected.id === "custom" ? form.customImagePrompt : selected.prompt;
   return template
-    .replaceAll("{name}", form.name.trim() || "this Hudson's Farm product")
+    .replaceAll("{name}", form.name.trim() || "this Revayah Sanctuary product")
     .replaceAll("{category}", form.category)
     .replaceAll("{description}", form.description.trim() || "an artisanal farm product");
 }

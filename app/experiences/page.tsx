@@ -9,12 +9,14 @@ const Arrow = () => (
 );
 
 const experiences = [
-  { tag: "Individual", img: "/images/mpcfvd99-11-about.png", duration: "1.5 hours", title: "Guided Farm Tour", desc: "Walk all three cultivation zones with Peter: hemp fields, mushroom tunnels, microgreens nursery, dams, and orchard. Individual and small group sessions." },
+  { tag: "Heritage", img: "/images/revayah-heritage.jpg", duration: "1.5 hours", title: "Heritage Trail Walk", desc: "Walk the heritage trail with a guide: the story of Chief Mogale, the Sekhukhune Wars, and the landscape that holds them. Ends at the amphitheatre site." },
+  { tag: "Museum", img: "/images/revayah-hub.jpg", duration: "45 minutes", title: "Museum & Interpretation Visit", desc: "The multimedia museum at the Revival Hub: looping documentary, interactive maps, and voices from the oral history archive. Free for local schools on weekdays." },
+  { tag: "Individual", img: "/images/mpcfvd99-11-about.png", duration: "1.5 hours", title: "Guided Farm Tour", desc: "Walk the sanctuary with Peter: hemp fields, mushroom tunnels, microgreens nursery, dams, and orchard. Individual and small group sessions." },
   { tag: "Groups", img: "/images/mpcfvd90-10-hero.png", duration: "2 hours", title: "Group Farm Tour", desc: "Ideal for schools, corporate teams, and community groups. An extended guided walk with Q&A and a fresh produce tasting at the end." },
   { tag: "Workshop", img: "/images/mushroom-workshop.png", duration: "1.5 hours", title: "Mushroom Harvest Experience", desc: "Inside the growing tunnels, you'll learn how gourmet mushrooms are cultivated, identify varieties by sight, and harvest your own batch to take home." },
   { tag: "Producer Tour", img: "/images/mpcfvda5-15-microgreens.png", duration: "45 minutes", title: "Microgreens Nursery Walk", desc: "A focused walk through the microgreens growing beds. Learn varieties, nutrition, and how to grow your own. Take home a fresh tray." },
   { tag: "Direct Purchase", img: "/images/mpcfvda0-14-dam.png", duration: "30 min", title: "Fresh Harvest Pickup", desc: "Arrange a direct pickup of seasonal vegetables, microgreens, or mushrooms straight from the farm. Schedule in advance. What's available changes weekly." },
-  { tag: "Farm Stay", img: "/images/harvest-table.png", duration: "Overnight", title: "Agri-Tourism Farm Stay", desc: "Wake up to the Magaliesberg valley. Stay on the farm, walk the grounds at sunrise, and leave with a fresh harvest box. Enquire for availability and rates." },
+  { tag: "Farm Stay", img: "/images/revayah-resort.jpg", duration: "Overnight", title: "Agri-Tourism Farm Stay", desc: "Wake up beneath the Magaliesberg. Stay at the sanctuary, walk the grounds at sunrise, and leave with a fresh harvest box. Fifteen eco-lodge units are planned; current stays by arrangement." },
 ];
 
 const events = [
@@ -38,12 +40,12 @@ export default function ExperiencesPage() {
     <main>
       {/* HERO */}
       <section className="hero compact">
-        <Image src="/images/mpcfvd90-10-hero.png" alt="Hudson's Farm experiences" fill sizes="100vw" className="hero-bg" priority />
+        <Image src="/images/mpcfvd90-10-hero.png" alt="Revayah Sanctuary experiences" fill sizes="100vw" className="hero-bg" priority />
         <div className="hero-overlay" />
         <div className="hero-inner">
           <div className="hero-content">
             <span className="hero-eyebrow">Agri-Tourism</span>
-            <h1>Come to the Farm</h1>
+            <h1>Come to the Sanctuary</h1>
             <p className="hero-sub">Whether you&apos;re joining a guided tour, picking up a fresh harvest box, or staying overnight in the valley, every visit is arranged directly with Peter.</p>
           </div>
         </div>
@@ -133,6 +135,9 @@ export default function ExperiencesPage() {
                     <div className="form-group full">
                       <label>Experience</label>
                       <select>
+                        <option>Heritage Trail Walk</option>
+                        <option>Museum &amp; Interpretation Visit</option>
+                        <option>Hemp Academy Enquiry</option>
                         <option>Guided Farm Tour (Individual)</option>
                         <option>Group Farm Tour</option>
                         <option>Mushroom Harvest Experience</option>

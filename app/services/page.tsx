@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export const metadata = { title: "Services | Hudson's Farm" };
+export const metadata = { title: "What We Do | Revayah Sanctuary" };
 
 const Check = ({ size = 16 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
@@ -9,12 +9,12 @@ const Check = ({ size = 16 }: { size?: number }) => (
 
 const mainServices = [
   {
-    num: "01", tag: "Cultivation", img: "/images/mpcfvd9p-13-hemp.png", title: "Organic Hemp Cultivation",
+    num: "01", tag: "Hemp Training Academy", img: "/images/mpcfvd9p-13-hemp.png", title: "Hemp Cultivation & Training Academy",
     paras: [
-      "Hudson's Farm grows licensed industrial hemp on the upper hectare. Every plant is cultivated without pesticides, herbicides, or synthetic fertilisers, irrigated by the on-site natural dam and managed on a seasonal rotation.",
-      "Our hemp is grown under full regulatory compliance. We welcome research partnerships, bulk enquiries, and agri-processing collaborations.",
+      "Revayah Sanctuary grows licensed industrial hemp (under 0.2% THC) without pesticides, herbicides, or synthetic fertilisers — and is building a Hemp Training Academy offering certified training in cultivation and processing for fibre, seed, and construction materials.",
+      "Our cultivation permit is granted by DALRRD under the Plant Improvement Act, with processing registration through the dtic in process — fully aligned with South Africa's Cannabis Master Plan. We welcome students, research partnerships, and agri-processing collaborations.",
     ],
-    details: ["100% pesticide-free cultivation", "Licensed and compliant with South African hemp regulations", "Natural dam irrigation, minimal water footprint", "Available for bulk enquiry and research partnerships"],
+    details: ["DALRRD cultivation permit granted", "Legal industrial hemp only — under 0.2% THC", "Certified training in cultivation & processing", "Aligned with the SA Cannabis Master Plan"],
   },
   {
     num: "02", tag: "Harvest", img: "/images/mpcfvd9g-12-services.png", title: "Gourmet Mushroom Growing",
@@ -46,7 +46,7 @@ const extras = [
   { title: "Farm Tours & Experiences", desc: "Guided walks through the hemp fields, mushroom tunnels, microgreens nursery, and dams. Book individually or in groups." },
   { title: "Fresh Harvest Bookings", desc: "Schedule your own fresh-harvest visit. Pick up seasonal vegetables, microgreens, and mushrooms direct from the source." },
   { title: "Agri-Tourism & Farm Stays", desc: "Stay on the farm and wake up to the Magaliesberg. Overnight stays by arrangement. Enquire for rates and availability." },
-  { title: "Pecan Tree Orchard", desc: "Our mature pecan orchard lines the eastern edge of the property. Seasonal pecan availability. Enquire for harvest dates." },
+  { title: "The Revival Hub Shop", desc: "Hemp products, honey, crafts, and the farm kitchen range — everything made or grown at the sanctuary, in one shop." },
 ];
 
 export default function ServicesPage() {
@@ -54,11 +54,11 @@ export default function ServicesPage() {
     <main>
       {/* HERO */}
       <section className="hero compact">
-        <Image src="/images/mpcfvd90-10-hero.png" alt="Hudson's Farm" fill sizes="100vw" className="hero-bg" priority />
+        <Image src="/images/mpcfvd90-10-hero.png" alt="Revayah Sanctuary fields" fill sizes="100vw" className="hero-bg" priority />
         <div className="hero-overlay" />
         <div className="hero-inner">
           <div className="hero-content">
-            <span className="hero-eyebrow">Hudson&apos;s Farm</span>
+            <span className="hero-eyebrow">Revayah Sanctuary</span>
             <h1>Our offerings</h1>
             <p className="hero-sub">From hemp fields to mushroom houses to guided farm walks. Everything grown and offered on one regenerative farm.</p>
           </div>
@@ -94,7 +94,7 @@ export default function ServicesPage() {
       <section className="section alt">
         <div className="container">
           <div className="section-head" data-reveal>
-            <span className="eyebrow">More from Hudson&apos;s Farm</span>
+            <span className="eyebrow">More from Revayah Sanctuary</span>
             <h2>Experiences &amp; agri-tourism</h2>
             <p className="section-sub">Beyond what we grow, the farm itself is a destination. Come and see for yourself.</p>
           </div>

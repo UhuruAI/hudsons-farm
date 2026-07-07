@@ -8,7 +8,8 @@ import { useCart } from "@/context/CartContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/the-farm", label: "The Farm" },
+  { href: "/the-farm", label: "The Sanctuary" },
+  { href: "/heritage", label: "Heritage" },
   { href: "/experiences", label: "Experiences" },
   { href: "/services", label: "Services" },
   { href: "/shop", label: "Shop" },
@@ -49,14 +50,14 @@ export default function Nav() {
 
   return (
     <>
-      <div className="announce">Now booking farm visits · Magaliesburg, South Africa</div>
+      <div className="announce">Now booking sanctuary visits · Maanhaarrand, North West</div>
 
       <header className={`site-header${scrolled ? " scrolled" : ""}`}>
         {/* Desktop */}
         <div className="nav-desktop">
-          <Link href="/" className="wordmark" aria-label="Hudson's Farm home">
+          <Link href="/" className="wordmark" aria-label="Revayah Sanctuary home">
             <Leaf size={26} />
-            <span>HUDSON&apos;S FARM</span>
+            <span>REVAYAH SANCTUARY</span>
           </Link>
           <nav className="mainnav" aria-label="Primary">
             {navLinks.map(({ href, label }) => (
@@ -100,9 +101,9 @@ export default function Nav() {
           <button className="icon-btn" onClick={() => setMenuOpen(true)} aria-label="Open menu">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
           </button>
-          <Link href="/" className="wordmark" aria-label="Hudson's Farm home">
+          <Link href="/" className="wordmark" aria-label="Revayah Sanctuary home">
             <Leaf size={20} />
-            <span>HUDSON&apos;S FARM</span>
+            <span>REVAYAH SANCTUARY</span>
           </Link>
           <div style={{ display: "flex", gap: 14 }}>
             <button className="nav-icon" onClick={toggleTheme} aria-label="Toggle theme">
@@ -125,7 +126,7 @@ export default function Nav() {
           <div className="drawer-scrim" onClick={() => setMenuOpen(false)} />
           <aside className="drawer">
             <div className="drawer-head">
-              <span>HUDSON&apos;S FARM</span>
+              <span>REVAYAH SANCTUARY</span>
               <button className="icon-btn" onClick={() => setMenuOpen(false)} aria-label="Close menu">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M6 6l12 12M18 6 6 18" /></svg>
               </button>

@@ -78,7 +78,7 @@ export default function AuthPage() {
     <main>
       <div className="page-hero">
         <div className="container">
-          <span className="eyebrow">Hudson&apos;s Farm</span>
+          <span className="eyebrow">Revayah Sanctuary</span>
           <h1>{flow === "signIn" ? "Sign in" : "Create account"}</h1>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function AuthPage() {
           <div className="auth-card">
             <div className="auth-crest">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 9-9 0 0 3 5 3 9a7 7 0 0 1-5 7Z" /><path d="M11 20c0-4 2-7.5 5-9.5" /></svg>
-              <span>HUDSON&apos;S FARM</span>
+              <span>REVAYAH SANCTUARY</span>
             </div>
 
             <div className="auth-tabs">

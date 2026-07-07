@@ -40,9 +40,9 @@ export default function ShopPage() {
     <main>
       <div className="page-hero">
         <div className="container">
-          <span className="eyebrow">Farm Kitchen</span>
-          <h1>The Farm Shop</h1>
-          <p>Baked goods, condiments, spices, jams, and chai. Made with real ingredients, no shortcuts.</p>
+          <span className="eyebrow">The Revival Hub</span>
+          <h1>The Revival Hub Shop</h1>
+          <p>Baked goods, condiments, spices, jams, and chai — everything made or grown at Revayah Sanctuary. Real ingredients, no shortcuts.</p>
         </div>
       </div>
 

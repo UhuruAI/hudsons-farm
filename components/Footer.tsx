@@ -13,16 +13,16 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="footer-crest">
         <Leaf />
-        <span>HUDSON&apos;S FARM</span>
+        <span>REVAYAH SANCTUARY</span>
       </div>
 
       <div className="footer-dark">
         <div className="footer-grid">
           <div className="footer-brand">
-            <span className="fb-name">HUDSON&apos;S FARM</span>
-            <p>Organic. Regenerative. Rooted in Africa.</p>
+            <span className="fb-name">REVAYAH SANCTUARY</span>
+            <p>Heritage. Regeneration. Rooted in Africa.</p>
             <div className="footer-contact">
-              <span>Magaliesburg, South Africa</span>
+              <span>Maanhaarrand, North West Province, South Africa</span>
               <a href="tel:0731615319">073 161 5319</a>
               <a href="mailto:mzanziprince@gmail.com">mzanziprince@gmail.com</a>
             </div>
@@ -32,7 +32,8 @@ export default function Footer() {
             <h4>Navigate</h4>
             <div className="fc-links">
               <Link href="/">Home</Link>
-              <Link href="/the-farm">The Farm</Link>
+              <Link href="/the-farm">The Sanctuary</Link>
+              <Link href="/heritage">Heritage</Link>
               <Link href="/experiences">Experiences</Link>
               <Link href="/services">Services</Link>
               <Link href="/shop">Shop</Link>
@@ -45,9 +46,9 @@ export default function Footer() {
             <h4>Visit</h4>
             <div className="fc-links">
               <Link href="/experiences">Book a Farm Tour</Link>
-              <Link href="/experiences">Fresh Harvest Pickup</Link>
+              <Link href="/heritage">Heritage Trails &amp; Museum</Link>
               <Link href="/experiences">Farm Stays</Link>
-              <Link href="/experiences">Microgreens Subscription</Link>
+              <Link href="/shop">The Revival Hub Shop</Link>
               <Link href="/auth">My Account</Link>
             </div>
           </div>
@@ -61,7 +62,7 @@ export default function Footer() {
 
         <div className="footer-legal">
           <span>
-            © 2025 Hudson&apos;s Farm. All rights reserved.{" "}
+            © 2026 Revayah Sanctuary. All rights reserved.{" "}
             <a href="https://uhuruai.co.za/" target="_blank" rel="noopener noreferrer">Built by Uhuru AI</a>
           </span>
         </div>
