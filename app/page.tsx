@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import SanctuaryMap from "@/components/SanctuaryMap";
 
 const Check = ({ size = 17 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
@@ -182,22 +181,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* THE MAP */}
-      <section className="section alt">
-        <div className="container">
-          <div className="section-head" data-reveal>
-            <span className="eyebrow">Find Us</span>
-            <h2>The sanctuary, mapped</h2>
-            <p className="section-sub">
-              Portion 30, Boschfontein No. 387, Maanhaarrand — about 90 minutes from Johannesburg, at the foot of the Magaliesberg.
-            </p>
-          </div>
-          <SanctuaryMap />
-        </div>
-      </section>
-
       {/* EXPERIENCE THE FARM */}
-      <section className="section">
+      <section className="section alt">
         <div className="container">
           <div className="section-head" data-reveal>
             <span className="eyebrow">Agri-Tourism</span>

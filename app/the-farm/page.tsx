@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import SanctuaryMap from "@/components/SanctuaryMap";
 
 export const metadata = { title: "The Sanctuary | Revayah Sanctuary" };
 
@@ -62,20 +61,8 @@ export default function TheFarmPage() {
         </div>
       </section>
 
-      {/* THE MAP */}
-      <section className="section alt">
-        <div className="container">
-          <div className="section-head" data-reveal>
-            <span className="eyebrow">The Map</span>
-            <h2>The sanctuary, laid out</h2>
-            <p className="section-sub">The illustrated master plan and the exact location in Maanhaarrand, North West Province.</p>
-          </div>
-          <SanctuaryMap />
-        </div>
-      </section>
-
       {/* THE PROPERTY */}
-      <section className="section">
+      <section className="section alt">
         <div className="container">
           <div className="section-head" data-reveal>
             <span className="eyebrow">The Property</span>
